@@ -18,3 +18,4 @@ LazyData: true
 Imports: 
     nloptr (>= 1.2.2.1),
     Formula (>= 1.2.3)
+RoxygenNote: 6.1.1
