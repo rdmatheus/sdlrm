@@ -1,11 +1,20 @@
 Package: sdlrm
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Sdl Regression for Integer-Valued Data
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Authors@R: person("Rodrigo", "Matheus",
+    email = "rodrigo.matheus@live.com",
+    role = c("aut", "cre"))
+Description: Implementation of the SDL regression model. Provide a set
+    of functions for a complete analysis of integer-valued data, in
+    which it is assumed that the dependent variable follows a Skew
+    Discrete Laplace (SDL) distribution. This regression model is also
+    useful for the analysis of experimental studies in which a paired
+    count data is observed.
+URL: https://github.com/Rodrigo-sgj/sdlrm
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
+Imports: 
+    nloptr (>= 1.2.2.1),
+    Formula (>= 1.2.3)
