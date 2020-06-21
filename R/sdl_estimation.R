@@ -57,7 +57,7 @@ mle_sdl <- function(y, X, Z, link = "log", control = sdl_control(...), ...){
   ll <- function(par) -ll_sdl(par, X, Z, link)
 
   # Score function
-  U <- function(par) -U_sdl(par, X, Z, link)
+  U <- function(par) -U_sdl(par, y, X, Z, link)
 
   # Constraints and its Jacobian
   hj <- function(par){
