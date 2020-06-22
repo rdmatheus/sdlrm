@@ -90,7 +90,7 @@ g <- function(link){
 ###################################################################
 # Log-lokelihood function                                         #
 ##################################################################
-ll_sdl <- function(theta, X, Z, link = "log"){
+ll_sdl <- function(theta, y, X, Z, link = "log"){
 
   # Link function
   inv <- g(link)$inv

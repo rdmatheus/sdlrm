@@ -21,11 +21,12 @@
 #'
 #' @export
 #'
-mle_sdl <- function(y, X, Z, link = "log", control = sdl_control(...), ...){
+mle_sdl <- function(y, X, Z, link = "log", control = sdl_control(...),
+                    eq_constraint = NULL,
+                    eq_constraint_jac = NULL,...){
 
   # Control list
   start     <- control$start
-  start2    <- control$start2
   constant  <- control$constant
   error     <- control$error
   optimizer <- control$optimizer
@@ -54,7 +55,7 @@ mle_sdl <- function(y, X, Z, link = "log", control = sdl_control(...), ...){
   }
 
   # Log-likelihood
-  ll <- function(par) -ll_sdl(par, X, Z, link)
+  ll <- function(par) -ll_sdl(par, y, X, Z, link)
 
   # Score function
   U <- function(par) -U_sdl(par, y, X, Z, link)
@@ -94,13 +95,20 @@ mle_sdl <- function(y, X, Z, link = "log", control = sdl_control(...), ...){
 
   if (optimizer == "nloptr"){
 
-    est <- suppressWarnings(nloptr::nloptr(x0 = start,
-                                           eval_f = ll,
-                                           eval_grad_f = U,
-                                           eval_g_ineq = hj,
-                                           eval_jac_g_ineq = Jh,
-                                           opts = list("algorithm" = algorithm,
-                                                       "xtol_rel"= error))$solution)
+    if (!is.null(eq_constraint)){
+      eq_constraint <- match.fun(eq_constraint)
+      eq_constraint_jac <- match.fun(eq_constraint_jac)
+    }
+
+    est <- nloptr::nloptr(x0 = start,
+                          eval_f = ll,
+                          eval_grad_f = U,
+                          eval_g_ineq = hj,
+                          eval_jac_g_ineq = Jh,
+                          eval_g_eq = eq_constraint,
+                          eval_jac_g_eq = eq_constraint_jac,
+                          opts = list("algorithm" = algorithm,
+                                      "xtol_rel"= error))$solution
 
     logLik <- -ll(est)
 
@@ -113,7 +121,7 @@ mle_sdl <- function(y, X, Z, link = "log", control = sdl_control(...), ...){
                                          fn = ll,
                                          gr = U,
                                          method = "BFGS")$par)
-    logLik <- -ll_sdl(est)
+    logLik <- -ll(est)
 
     feasible <- all(hj(est) < 0)
   }
