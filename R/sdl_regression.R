@@ -203,7 +203,7 @@ K_sdl <- function(par, X, Z, link = "log"){
 ##################################################################
 sdl_control <- function(start = NULL,
                         start2 = NULL,
-                        constant = 1e-10,
+                        constant = 1e-8,
                         error = 1e-8,
                         optimizer = "nloptr",
                         algorithm = "NLOPT_LD_SLSQP", ...){
