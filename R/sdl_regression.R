@@ -7,7 +7,7 @@
 #' that is indexed by the mean and a dispersion parameter.
 #'
 #' @param formula description of the model, of type \code{y ~ x} for covariates in mean only, or \code{y ~ x | z} to enter covariates in the dispersion parameter.
-#' @param data a dataframe containing the data.
+#' @param data an optional data frame containing the variables in the formula. By default the variables are taken from environment(formula).
 #' @param link character specification of the link function for the dispersion parameter. The links \code{"log"} (default) \code{"sqrt"} and \code{"identity"} can be used.
 #' @param y a integer-valued vector of the response variable. This argument is used in the \code{fit_sdl} function to get the estimates and required quantities that will return in the object resulting from the sdlrm function.
 #' @param X,Z model matrices associated with the mean and the dispersion parameter, respectively, which are used in the \code{fit_sdl} function.
