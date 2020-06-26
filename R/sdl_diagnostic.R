@@ -16,8 +16,13 @@
 # #' @details For a count y with possible outcomes y = ..., -2, -1, 0, 1, 2, \ldots, the
 # #' expected frequencies were defined in Kleiber and Zeileis (2016).
 #'
-#' @references Medeiros, R. & Bourguignon, M. (2020).  \cr
-#' Kleiber, C., & Zeileis, A. (2016). Visualizing count data regressions using rootograms. The American Statistician, 70, 296-303
+#' @references  Kleiber, C., & Zeileis, A. (2016). Visualizing count
+#'     data regressions using rootograms. The American Statistician,
+#'     70, 296-303
+#'
+#' @references Medeiros, R. M. R., Bourguignon, M. (2020). Mean and
+#'     dispersion regression model for paired count data with
+#'     application to quality of life in prisons.
 #'
 #' @author Rodrigo M. R. Medeiros <\email{rodrigo.matheus@live.com}>
 #'

@@ -97,9 +97,13 @@ points(obj, dsdl(sort(unique(y)), mu, phi), col = "red", pch = 16)
 
 }
 \references{
-Medeiros, R. and Bourguignon, M. (2020).
+Medeiros, R. M. R., Bourguignon, M. (2020). Mean and
+    dispersion regression model for paired count data with
+    application to quality of life in prisons.
 
-Kozubowski, T. J., and Inusah, S. (2006). A skew Laplace distribution on integers. Annals of the Institute of Statistical Mathematics, 58, 555--571.
+Kozubowski, T. J., and Inusah, S. (2006). A skew Laplace
+    distribution on integers. Annals of the Institute of Statistical
+    Mathematics, 58, 555--571.
 }
 \author{
 Rodrigo M. R. Medeiros <\email{rodrigo.matheus@live.com}>

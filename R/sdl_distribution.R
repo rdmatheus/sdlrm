@@ -35,9 +35,13 @@
 # #' with mean \code{mu} and dispersion parameter \code{phi}. The probability
 # #' mass function of X is
 #'
-#' @references Medeiros, R. and Bourguignon, M. (2020).
+#' @references Medeiros, R. M. R., Bourguignon, M. (2020). Mean and
+#'     dispersion regression model for paired count data with
+#'     application to quality of life in prisons.
 #'
-#' @references Kozubowski, T. J., and Inusah, S. (2006). A skew Laplace distribution on integers. Annals of the Institute of Statistical Mathematics, 58, 555--571.
+#' @references Kozubowski, T. J., and Inusah, S. (2006). A skew Laplace
+#'     distribution on integers. Annals of the Institute of Statistical
+#'     Mathematics, 58, 555--571.
 #'
 #' @author Rodrigo M. R. Medeiros <\email{rodrigo.matheus@live.com}>
 #'

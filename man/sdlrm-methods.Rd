@@ -11,7 +11,7 @@
 \alias{model.matrix.sdlrm}
 \title{Methods for 'sdlrm' objects}
 \usage{
-\method{plot}{sdlrm}(object)
+plot.sdlrm(object)
 
 \method{logLik}{sdlrm}(object)
 
@@ -49,7 +49,9 @@ with both matrices are returned.}
 Methods for 'sdlrm' objects
 }
 \references{
-Medeiros, R. & Bourguignon, M. (2020).
+Medeiros, R. M. R., Bourguignon, M. (2020). Mean and
+    dispersion regression model for paired count data with
+    application to quality of life in prisons.
 }
 \author{
 Rodrigo M. R. Medeiros <\email{rodrigo.matheus@live.com}>

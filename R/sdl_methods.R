@@ -4,7 +4,9 @@
 #'
 #' @return .
 #'
-#' @references Medeiros, R. & Bourguignon, M. (2020).
+#' @references Medeiros, R. M. R., Bourguignon, M. (2020). Mean and
+#'     dispersion regression model for paired count data with
+#'     application to quality of life in prisons.
 #'
 #' @author Rodrigo M. R. Medeiros <\email{rodrigo.matheus@live.com}>
 NULL

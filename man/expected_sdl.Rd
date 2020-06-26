@@ -44,8 +44,13 @@ expect_sdl(y, mu, phi)
 
 }
 \references{
-Medeiros, R. & Bourguignon, M. (2020).  \cr
-Kleiber, C., & Zeileis, A. (2016). Visualizing count data regressions using rootograms. The American Statistician, 70, 296-303
+Kleiber, C., & Zeileis, A. (2016). Visualizing count
+    data regressions using rootograms. The American Statistician,
+    70, 296-303
+
+Medeiros, R. M. R., Bourguignon, M. (2020). Mean and
+    dispersion regression model for paired count data with
+    application to quality of life in prisons.
 }
 \author{
 Rodrigo M. R. Medeiros <\email{rodrigo.matheus@live.com}>
