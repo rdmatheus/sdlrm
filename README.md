@@ -35,44 +35,39 @@ library(sdlrm)
 ![alt text](figures/fig1b.png)
 
 ``` r
-####################
-# Mean model only  #
-###################
+# Fit a double model (mean and dispersion) with a test for constant dispersion
 
-# Fit model
-
-fit <- sdlrm(Diff ~ Group, data = pss)
+fit <- sdlrm(Diff ~ Group | Group, data = pss, disp_test = TRUE)
 
 # Print
 
 fit
-#>
+#> 
 #> Call:
-#> sdlrm(formula = Diff ~ Group, data = pss)
+#> sdlrm(formula = Diff ~ Group | Group, data = pss, disp_test = TRUE)
 #> 
-#> mu Coefficients:
-#> [1]   5.573674 -10.718696
+#> mean Coefficients:
+#> [1]   7.363636 -11.296970
 #> 
-#> phi Coefficients:
-#> [1] 10.57828
-
-# Summary
+#> dispersion Coefficients:
+#> [1]  2.6555938 -0.5875912
+#> # Summary
 
 summary(fit)
 #>
 #> Call:
-#> sdlrm(formula = Diff ~ Group, data = pss)
+#> sdlrm(formula = Diff ~ Group | Group, data = pss, disp_test = TRUE)
 #> 
 #> Summary for residuals:
 #>       Mean       Sd  Skewness Kurtosis
-#>   0.121409 0.950138 -0.365905 2.272026
+#>   0.012713 0.966192 -0.177681 1.800122
 #> 
 #> ----------------------------------------------------------------
 #> Mean:
 #> Coefficients:
 #>             Estimate Std. Error t value  Pr(>|t|)   
-#> (Intercept)   5.5737     2.4082  2.3145  0.020643 * 
-#> GroupSport  -10.7187     3.5503 -3.0191  0.002535 **
+#> (Intercept)   7.3636     3.6010  2.0449  0.040867 * 
+#> GroupSport  -11.2970     4.0119 -2.8159  0.004865 **
 #> ---
 #> Signif. codes:  
 #>   0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
@@ -80,17 +75,24 @@ summary(fit)
 #> ----------------------------------------------------------------
 #> Dispersion:
 #> 
-#> Link function: identity 
+#> Link function: log 
 #> Coefficients:
-#>     Estimate Std. Error t value  Pr(>|t|)
-#> phi  10.5783     2.2493   4.703 2.564e-06***
+#>             Estimate Std. Error t value  Pr(>|t|)    
+#> (Intercept)  2.65559    0.32089  8.2758    <2e-16 ***
+#> GroupSport  -0.58759    0.43006 -1.3663    0.1718    
 #> ---
 #> Signif. codes:  
 #>   0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #> 
 #> ----------------------------------------------------------------
-#> In addition, Log-lik value: -89.51159 
-#> AIC: 185.0232 and BIC: 188.7975
+#> 
+#> Test for constant dispersion:
+#>                 S         W        LR         G
+#> Value   1.9292900 1.8667800 1.8920900 1.8964500
+#> P value 0.1648361 0.1718443 0.1689664 0.1684762
+#>                 
+#> In addition, Log-lik value: -88.56555 
+#> AIC: 185.1311 and BIC: 190.1635
 
 # Plot
 
