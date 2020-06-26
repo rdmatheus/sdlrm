@@ -9,6 +9,8 @@
 #' @param X,Z model matrices associated with the mean and the dispersion parameter, respectively.
 #' @param link character specification of the link function for the dispersion parameter. The links \code{"log"} (default) \code{"sqrt"} and \code{"identity"} can be used.
 #' @param control a list of control arguments specified via \code{sdl_control}.
+#' @param eq_constraint a function to evaluate equality constraints under the null hypothesis, in hypothesis testing contexts.
+#' @param eq_constraint_jac a function to evaluate the jacobian of the equality constraints, , which were passed by the \code{eq_constraint} argument.
 #' @param ... arguments passed to \code{sdl_control}.
 #'
 #' @return A list with the values of the maximum likelihood estimates (\code{est});
