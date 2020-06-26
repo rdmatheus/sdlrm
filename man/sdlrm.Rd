@@ -12,7 +12,7 @@ fit_sdl(y, X, Z = NULL, link = "log", control = sdl_control())
 \arguments{
 \item{formula}{description of the model, of type \code{y ~ x} for covariates in mean only, or \code{y ~ x | z} to enter covariates in the dispersion parameter.}
 
-\item{data}{a dataframe containing the data.}
+\item{data}{an optional data frame containing the variables in the formula. By default the variables are taken from environment(formula).}
 
 \item{link}{character specification of the link function for the dispersion parameter. The links \code{"log"} (default) \code{"sqrt"} and \code{"identity"} can be used.}
 
