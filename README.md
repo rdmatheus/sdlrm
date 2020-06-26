@@ -23,3 +23,25 @@ After installing the devtools package, if you are using Windows, install the mos
 
 ## Example
 
+This package provide complete estimation and inference for the parameters as well as simulation envelope plots, useful for assessing the goodness-of-fit of the model. The implementation is straightforward and similar to other popular packages, like `betareg` and `glm`, where the main function is `sdlrm()`. Below is an example of some functions usage and available methods
+
+``` r
+library(sdlrm)
+
+# Data (Description: ?pss)
+par(mfrow = c(1, 2))
+barplot(table(pss$Diff), xlab = "PSS difference", ylab = "Frequency")
+boxplot(pss$Diff ~ pss$Group, xlab = "Group", ylab = "PSS difference")
+par(mfrow = c(1, 1))
+
+# Model fit (Mean model only)
+fit <- sdlrm(Diff ~ Group, data = pss)
+
+# Print
+fit
+
+# Summary
+summary(fit)
+
+```
+
