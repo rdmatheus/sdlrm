@@ -19,9 +19,9 @@ print.sdlrm <- function(object)
 {
   cat("Call:\n")
   print(object$call)
-  cat("\nmu Coefficients:\n")
+  cat("\nmean Coefficients:\n")
   print((object$coefficients)$mean)
-  cat("\nphi Coefficients:\n")
+  cat("\ndispersion Coefficients:\n")
   print((object$coefficients)$dispersion)
 }
 
@@ -67,14 +67,14 @@ summary.sdlrm <- function(object)
   AIC <- as.numeric(object$AIC); names(AIC) <- " "
   BIC <- as.numeric(object$BIC); names(BIC) <- " "
 
-  # if(!is.null(object$test)){
-  #  p.val = round(pchisq(object$test,k-1,lower.tail = FALSE),5)
-  #  TAB.test = rbind(object$test,p.val)
-  #  colnames(TAB.test) <- c("S","W","LR","G")
-  #  rownames(TAB.test) <- c("Value","P-value")
-  # }else{
-  TAB.test = NULL
-  #}
+  if (!is.null(object$test)){
+    p.val <- pchisq(object$test, k-1, lower.tail = FALSE)
+    TAB.test <- rbind(object$test,p.val)
+    colnames(TAB.test) <- c("S","W","LR","G")
+    rownames(TAB.test) <- c("Value", "P value")
+  }else{
+    TAB.test <- NULL
+  }
 
   out <- list(call = object$call, residuals = TAB.residuals,link = object$link,
               link.phi = object$link.phi, mean = TAB.mu, dispersion = TAB.phi, test = TAB.test,
@@ -102,7 +102,7 @@ print.summary.sdlrm <- function(object)
   cat("Coefficients:\n")
   stats::printCoefmat(object$dispersion)
   cat("\n----------------------------------------------------------------")
-  if(!is.null(object$test)){
+  if (!is.null(object$test)){
     cat("\n\nTest for constant dispersion:\n")
     print(object$test)
   }

@@ -11,6 +11,7 @@
 #' @param link character specification of the link function for the dispersion parameter. The links \code{"log"} (default) \code{"sqrt"} and \code{"identity"} can be used.
 #' @param y a integer-valued vector of the response variable. This argument is used in the \code{fit_sdl} function to get the estimates and required quantities that will return in the object resulting from the sdlrm function.
 #' @param X,Z model matrices associated with the mean and the dispersion parameter, respectively, which are used in the \code{fit_sdl} function.
+#' @param disp_test logical, if TRUE, the function \code{sdlrm} returns the test for constant dispersion.
 #' @param control a list of control arguments specified via \code{sdl_control}.
 #' @param ... arguments passed to \code{sdl_control}.
 #'
@@ -222,7 +223,7 @@ sdl_control <- function(start = NULL,
 
 #' @rdname sdlrm
 #' @export
-sdlrm <- function(formula, data, link = NULL, control = sdl_control(...), ...)
+sdlrm <- function(formula, data, link = NULL, disp_test = FALSE, control = sdl_control(...), ...)
 {
   cl <- match.call()
   if (missing(data)) data <- environment(formula)
@@ -268,7 +269,10 @@ sdlrm <- function(formula, data, link = NULL, control = sdl_control(...), ...)
 
   if (k > 1) {
     out$names.dispersion <- c("(Intercept)", colnames(Z)[2:k])
-    #out$test = round(sdl.gama.test(y, X, Z, cols.d=2:k, gama0=rep(0,k-1), link, start=start,start2=start2),5)
+
+    if (disp_test == TRUE){
+      out$test <- round(disp_test(y, X, Z, cols = 2:k, link = link, start = start2), 5)
+    }
 
   }else{
     if (out$link == "identity"){
