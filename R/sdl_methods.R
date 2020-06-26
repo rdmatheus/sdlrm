@@ -159,7 +159,7 @@ logLik.sdlrm <- function(object) {
 # AIC
 #' @export
 #' @rdname sdlrm-methods
-AIC.sdlrm <- function(object, ..., k = 2) {
+AIC.sdlrm <- function(object, k = 2) {
   AIC <- - 2 * object$logLik + k * (object$p + object$k)
   class(AIC) <- "AIC"
   return(AIC)
@@ -167,8 +167,9 @@ AIC.sdlrm <- function(object, ..., k = 2) {
 
 # BIC
 #' @export
+#' @param numeric, the penalty per parameter to be used; the default k = 2 is the classical AIC.
 #' @rdname sdlrm-methods
-BIC.sdlrm <- function(object, ...) {
+BIC.sdlrm <- function(object) {
   n <- object$n.obs
   BIC <- - 2 * object$logLik + log(n) * (object$p + object$k)
   class(BIC) <- "BIC"
@@ -205,11 +206,11 @@ vcov.sdlrm <- function(object) {
 # Design matrices
 #' @rdname sdlrm-methods
 #' @export
-#' @param what a character indicating which model matrix is
+#' @param matrix a character indicating which model matrix is
 #'   required, the model matrix for the mean (\code{"mean"}) or for the
 #'   dispersion parameter (\code{"dispersion"}). If \code{"all"} (default), a list with
 #'   with both matrices are returned.
-model.matrix.sdlrm <- function (object, what = c("all", "mean", "dispersion")) {
+model.matrix.sdlrm <- function (object, matrix = c("all", "mean", "dispersion")) {
 
     what <- match.arg(what)
     out <- switch(what,

@@ -15,15 +15,15 @@
 
 \method{logLik}{sdlrm}(object)
 
-\method{AIC}{sdlrm}(object, ..., k = 2)
+\method{AIC}{sdlrm}(object, k = 2)
 
-\method{BIC}{sdlrm}(object, ...)
+\method{BIC}{sdlrm}(object)
 
 \method{coef}{sdlrm}(object, what = c("all", "mean", "dispersion"))
 
 \method{vcov}{sdlrm}(object)
 
-\method{model.matrix}{sdlrm}(object, what = c("all", "mean",
+\method{model.matrix}{sdlrm}(object, matrix = c("all", "mean",
   "dispersion"))
 }
 \arguments{
@@ -35,10 +35,12 @@ required, parameters for the \code{"mean"} or for the
 coefficients for the \code{mean} and for the \code{dispersion}
 model is returned.}
 
-\item{what}{a character indicating which model matrix is
+\item{matrix}{a character indicating which model matrix is
 required, the model matrix for the mean (\code{"mean"}) or for the
 dispersion parameter (\code{"dispersion"}). If \code{"all"} (default), a list with
 with both matrices are returned.}
+
+\item{numeric, }{the penalty per parameter to be used; the default k = 2 is the classical AIC.}
 }
 \value{
 .
