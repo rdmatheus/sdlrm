@@ -108,3 +108,13 @@ envel_sdl(fit)
 
 ![alt text](figures/fig3a.png)
 ![alt text](figures/fig3b.png)
+
+Currently, the methods implemented for "sdlrm" objects are
+``` r
+methods(class = "sdlrm")
+#>
+#> [1] AIC          BIC          coef         logLik      
+#> [5] model.matrix plot         print        summary     
+#> [9] vcov        
+#> see '?methods' for accessing help and source code
+```
