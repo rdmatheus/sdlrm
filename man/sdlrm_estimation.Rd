@@ -17,6 +17,10 @@ mle_sdl(y, X, Z, link = "log", control = sdl_control(...),
 
 \item{control}{a list of control arguments specified via \code{sdl_control}.}
 
+\item{eq_constraint}{a function to evaluate equality constraints under the null hypothesis, in hypothesis testing contexts.}
+
+\item{eq_constraint_jac}{a function to evaluate the jacobian of the equality constraints, , which were passed by the \code{eq_constraint} argument.}
+
 \item{...}{arguments passed to \code{sdl_control}.}
 }
 \value{
