@@ -61,9 +61,9 @@ summary.sdlrm <- function(object)
                    `Pr(>|t|)` = pval.gamma)
   rownames(TAB.phi) <- object$names.dispersion
 
-  Log.lik = stats::logLik(object)#; names(Log.lik) <- " "
-  AIC = as.numeric(object$AIC); names(AIC) <- " "
-  BIC = as.numeric(object$BIC); names(BIC) <- " "
+  Log.lik <- stats::logLik(object)#; names(Log.lik) <- " "
+  AIC <- as.numeric(object$AIC); names(AIC) <- " "
+  BIC <- as.numeric(object$BIC); names(BIC) <- " "
 
   # if(!is.null(object$test)){
   #  p.val = round(pchisq(object$test,k-1,lower.tail = FALSE),5)
@@ -152,17 +152,15 @@ plot.sdlrm <- function(object)
 #' @rdname sdlrm-methods
 logLik.sdlrm <- function(object) {
   ll <- object$logLik
-  #attr(ll, "df") <- object$nobs - object$df.residual
-  #attr(ll, "nobs") <- object$nobs
-  #class(ll) <- "logLik"
+  class(ll) <- "logLik"
   return(ll)
 }
 
 # AIC
 #' @export
 #' @rdname sdlrm-methods
-AIC.sdlrm <- function(object) {
-  AIC <- - 2 * object$logLik + 2 * (object$p + object$k)
+AIC.sdlrm <- function(object, ..., k = 2) {
+  AIC <- - 2 * object$logLik + k * (object$p + object$k)
   class(AIC) <- "AIC"
   return(AIC)
 }
@@ -170,10 +168,10 @@ AIC.sdlrm <- function(object) {
 # BIC
 #' @export
 #' @rdname sdlrm-methods
-BIC.sdlrm <- function(object) {
+BIC.sdlrm <- function(object, ...) {
   n <- object$n.obs
-
   BIC <- - 2 * object$logLik + log(n) * (object$p + object$k)
+  class(BIC) <- "BIC"
   return(BIC)
 }
 
@@ -207,6 +205,17 @@ vcov.sdlrm <- function(object) {
 # Design matrices
 #' @rdname sdlrm-methods
 #' @export
-model.matrix.sdlrm <- function(object) {
-  list(X = object$X, Z = object$Z)
+#' @param what a character indicating which model matrix is
+#'   required, the model matrix for the mean (\code{"mean"}) or for the
+#'   dispersion parameter (\code{"dispersion"}). If \code{"all"} (default), a list with
+#'   with both matrices are returned.
+model.matrix.sdlrm <- function (object, what = c("all", "mean", "dispersion")) {
+
+    what <- match.arg(what)
+    out <- switch(what,
+                  "all" = list(mean = object$X,
+                               dispersion = object$Z),
+                  "mean" = object$X,
+                  "dispersion" = object$Z)
+    return(out)
 }

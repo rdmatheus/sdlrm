@@ -15,15 +15,16 @@
 
 \method{logLik}{sdlrm}(object)
 
-\method{AIC}{sdlrm}(object)
+\method{AIC}{sdlrm}(object, ..., k = 2)
 
-\method{BIC}{sdlrm}(object)
+\method{BIC}{sdlrm}(object, ...)
 
 \method{coef}{sdlrm}(object, what = c("all", "mean", "dispersion"))
 
 \method{vcov}{sdlrm}(object)
 
-\method{model.matrix}{sdlrm}(object)
+\method{model.matrix}{sdlrm}(object, what = c("all", "mean",
+  "dispersion"))
 }
 \arguments{
 \item{object}{an object of class \code{sdlrm}.}
@@ -33,6 +34,11 @@ required, parameters for the \code{"mean"} or for the
 \code{"dispersion"} model. If \code{"all"} (default), a list with
 coefficients for the \code{mean} and for the \code{dispersion}
 model is returned.}
+
+\item{what}{a character indicating which model matrix is
+required, the model matrix for the mean (\code{"mean"}) or for the
+dispersion parameter (\code{"dispersion"}). If \code{"all"} (default), a list with
+with both matrices are returned.}
 }
 \value{
 .
