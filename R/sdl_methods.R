@@ -11,7 +11,7 @@
 #' @author Rodrigo M. R. Medeiros <\email{rodrigo.matheus@live.com}>
 NULL
 
-sdlrm <- function(x) UseMethod("sdlrm")
+#sdlrm <- function(x) UseMethod("sdlrm")
 
 # Print
 #' @export

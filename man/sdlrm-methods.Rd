@@ -11,7 +11,7 @@
 \alias{model.matrix.sdlrm}
 \title{Methods for 'sdlrm' objects}
 \usage{
-plot.sdlrm(object)
+\method{plot}{sdlrm}(object)
 
 \method{logLik}{sdlrm}(object)
 
