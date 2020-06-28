@@ -58,7 +58,22 @@ likelihood for a new parameterization of this distribution
 that is indexed by the mean and a dispersion parameter.
 }
 \examples{
-#
+
+# Data set: pss (for description run ?pss)
+barplot(table(pss$Diff), xlab = "PSS index difference", ylab = "Frequency")
+boxplot(pss$Diff ~ pss$Group, xlab = "Group", ylab = "PSS index difference")
+
+# Fit with a model only for the mean
+fit_m <- sdlrm(Diff ~ Group, data = pss)
+summary(fit_m)
+
+# Fit a double model (mean and dispersion)
+fit_md <- sdlrm(Diff ~ Group | Group, data = pss)
+summary(fit_md)
+
+# Fit a double model with a test for constant dispersion
+fit <- sdlrm(Diff ~ Group | Group, data = pss, disp_test = TRUE)
+summary(fit)
 }
 \references{
 Medeiros, R. M. R., Bourguignon, M. (2020). Mean and
