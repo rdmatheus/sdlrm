@@ -51,7 +51,8 @@ fit
 #> 
 #> dispersion Coefficients:
 #> [1]  2.6555938 -0.5875912
-#> # Summary
+
+# Summary
 
 summary(fit)
 #>
