@@ -211,7 +211,8 @@ sdl_control <- function(start = NULL,
                         optimizer = "nloptr",
                         algorithm = "NLOPT_LD_SLSQP", ...){
 
-  rval <- list(start=start,
+  rval <- list(start = start,
+               start2 = start2,
                constant = constant,
                error = error,
                optimizer = optimizer,
@@ -271,6 +272,7 @@ sdlrm <- function(formula, data, link = NULL, disp_test = FALSE, control = sdl_c
     out$names.dispersion <- c("(Intercept)", colnames(Z)[2:k])
 
     if (disp_test == TRUE){
+      start2 <- control$start2
       out$test <- round(disp_test(y, X, Z, cols = 2:k, link = link, start = start2), 5)
     }
 

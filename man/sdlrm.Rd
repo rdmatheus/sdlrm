@@ -5,7 +5,8 @@
 \alias{fit_sdl}
 \title{Sdl Regression for Integer-Valued Data}
 \usage{
-sdlrm(formula, data, link = NULL, control = sdl_control(...), ...)
+sdlrm(formula, data, link = NULL, disp_test = FALSE,
+  control = sdl_control(...), ...)
 
 fit_sdl(y, X, Z = NULL, link = "log", control = sdl_control())
 }
@@ -15,6 +16,8 @@ fit_sdl(y, X, Z = NULL, link = "log", control = sdl_control())
 \item{data}{an optional data frame containing the variables in the formula. By default the variables are taken from environment(formula).}
 
 \item{link}{character specification of the link function for the dispersion parameter. The links \code{"log"} (default) \code{"sqrt"} and \code{"identity"} can be used.}
+
+\item{disp_test}{logical, if TRUE, the function \code{sdlrm} returns the test for constant dispersion.}
 
 \item{control}{a list of control arguments specified via \code{sdl_control}.}
 
