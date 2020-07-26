@@ -21,12 +21,12 @@ mean_test <- function(y, X, Z, cols, beta0 = NULL,
 
   # Restricted mle
   eq_constraint <- function(theta){
-    return(c(rep(0, p - r), rep(1, r), rep(0, k))%*%theta -
+    return(cbind(matrix(0, r, p - r + k), diag(rep(1, r)))%*%theta -
              beta0)
   }
 
   eq_constraint_jac <- function(theta){
-    return(c(rep(0, p - r), rep(1, r), rep(0, k)))
+    return(cbind(matrix(0, r, p - r + k), diag(rep(1, r))))
   }
 
   theta_tilde <- mle_sdl(y, X_aux, Z, link, control,
@@ -86,12 +86,12 @@ disp_test <- function(y, X, Z, cols, gamma0 = NULL,
 
   # Restricted mle
   eq_constraint <- function(theta){
-    return(c(rep(0, p + k - q), rep(1, q))%*%theta -
-           gamma0)
+    return(cbind(matrix(0, q, p + k - q), diag(rep(1, q)))%*%theta -
+             gamma0)
   }
 
   eq_constraint_jac <- function(theta){
-    return(c(rep(0, p + k - q), rep(1, q)))
+    return(cbind(matrix(0, q, p + k - q), diag(rep(1, q))))
   }
 
   theta_tilde <- mle_sdl(y, X, Z_aux, link, control,
