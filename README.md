@@ -32,7 +32,6 @@ library(sdlrm)
 ```
 
 ![alt text](figures/fig1a.png)
-![alt text](figures/fig1b.png)
 
 ``` r
 # Fit a double model (mean and dispersion) with a test for constant dispersion
