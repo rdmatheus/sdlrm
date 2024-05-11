@@ -1,54 +1,47 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "80%",
+  fig.align = "center"
+)
+```
 
 # `sdlrm`: Sdl Regression for Integer-Valued and Paired Count Data
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/rdmatheus/sdlrm/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rdmatheus/sdlrm/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-> Rodrigo M. R. Medeiros  
+> Rodrigo M. R. Medeiros                                                                                  
 > <rodrigo.matheus@live.com>, IME-USP
 
-Implementation of the SDL regression model proposed by Medeiros and
-Bourguignon (2020). The `sdlrm` package provide a set of functions for a
-complete analysis of integer-valued data, in which it is assumed that
-the dependent variable follows a Skew Discrete Laplace (SDL)
-distribution. This regression model is also useful for the analysis of
-experimental studies in which a paired count data is observed.
+Implementation of the SDL regression model proposed by Medeiros and Bourguignon (2020). The `sdlrm` package provide a set of functions for a complete analysis of integer-valued data, in which it is assumed that the dependent variable follows a Skew Discrete Laplace (SDL) distribution. This regression model is also useful for the analysis of experimental studies in which a paired count data is observed.
 
 ## Installation
 
-You can install the current development version of `sdlrm` from
-[GitHub](https://github.com/rdmatheus/sdlrm) with:
+You can install the current development version of `sdlrm` from [GitHub](https://github.com/rdmatheus/sdlrm) with:
 
 ``` r
 devtools::install_github("rdmatheus/sdlrm")
 ```
-
-To run the above command, it is necessary that the `devtools` package is
-previously installed on R. If not, install it using the following
-command:
+To run the above command, it is necessary that the `devtools` package is previously installed on R. If not, install it using the following command:
 
 ``` r
 install.packages("devtools")
 ```
-
-After installing the devtools package, if you are using Windows, install
-the most current
-[RTools](https://cran.r-project.org/bin/windows/Rtools/) program.
-Finally, run the command `devtools::install_github("rdmatheus/sdlrm")`,
-and then the package will be installed on your computer.
+After installing the devtools package, if you are using Windows, install the most current [RTools](https://cran.r-project.org/bin/windows/Rtools/) program. Finally, run the command `devtools::install_github("rdmatheus/sdlrm")`, and then the package will be installed on your computer.
 
 ## Example
 
-This package provide complete estimation and inference for the
-parameters as well as normal probability plots of residuals with a
-simulated envelope, useful for assessing the goodness-of-fit of the
-model. The implementation is straightforward and similar to other
-popular packages, like `betareg` and `glm`, where the main function is
-`sdlrm()`. Below is an example of some functions usage and available
-methods.
-
+This package provide complete estimation and inference for the parameters as well as normal probability plots of residuals with a simulated envelope, useful for assessing the goodness-of-fit of the model. The implementation is straightforward and similar to other popular packages, like `betareg` and `glm`, where the main function is `sdlrm()`. Below is an example of some functions usage and available methods.
 ``` r
 library(sdlrm)
 
@@ -122,7 +115,6 @@ summary(fit)
 
 plot(fit)
 ```
-
 ![](man/figures/fig2a.png)
 
 ``` r
@@ -131,10 +123,10 @@ plot(fit)
 envel_sdl(fit)
 ```
 
-![](man/figures/fig3a.png) ![alt text](man/figures/fig3b.png)
+![](man/figures/fig3a.png)
+![alt text](man/figures/fig3b.png)
 
-Currently, the methods implemented for “sdlrm” objects are
-
+Currently, the methods implemented for "sdlrm" objects are
 ``` r
 methods(class = "sdlrm")
 #>

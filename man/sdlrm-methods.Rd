@@ -5,29 +5,29 @@
 \alias{plot.sdlrm}
 \alias{logLik.sdlrm}
 \alias{AIC.sdlrm}
-\alias{BIC.sdlrm}
 \alias{coef.sdlrm}
 \alias{vcov.sdlrm}
 \alias{model.matrix.sdlrm}
-\title{Methods for 'sdlrm' objects}
+\title{Methods for "sdlrm" objects}
 \usage{
-\method{plot}{sdlrm}(object)
+\method{plot}{sdlrm}(x, ...)
 
 \method{logLik}{sdlrm}(object)
 
-\method{AIC}{sdlrm}(object, k = 2)
-
-\method{BIC}{sdlrm}(object)
+\method{AIC}{sdlrm}(object, ..., k = 2)
 
 \method{coef}{sdlrm}(object, what = c("all", "mean", "dispersion"))
 
 \method{vcov}{sdlrm}(object)
 
-\method{model.matrix}{sdlrm}(object, matrix = c("all", "mean",
-  "dispersion"))
+\method{model.matrix}{sdlrm}(object, matrix = c("all", "mean", "dispersion"))
 }
 \arguments{
-\item{object}{an object of class \code{sdlrm}.}
+\item{...}{further arguments passed to or from other methods.}
+
+\item{object, x}{an object of class \code{"sdlrm"}.}
+
+\item{k}{numeric, the penalty per parameter to be used; the default k = 2 is the classical AIC.}
 
 \item{what}{a character indicating which parameter coefficients are
 required, parameters for the \code{"mean"} or for the
@@ -39,14 +39,9 @@ model is returned.}
 required, the model matrix for the mean (\code{"mean"}) or for the
 dispersion parameter (\code{"dispersion"}). If \code{"all"} (default), a list with
 with both matrices are returned.}
-
-\item{numeric, }{the penalty per parameter to be used; the default k = 2 is the classical AIC.}
-}
-\value{
-.
 }
 \description{
-Methods for 'sdlrm' objects
+Methods for "sdlrm" objects
 }
 \references{
 Medeiros, R. M. R., Bourguignon, M. (2020). Mean and

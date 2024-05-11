@@ -1,8 +1,7 @@
 #' @name sdlrm-methods
-#' @title Methods for 'sdlrm' objects
-#' @param object an object of class \code{sdlrm}.
-#'
-#' @return .
+#' @title Methods for "sdlrm" objects
+#' @param object,x an object of class \code{"sdlrm"}.
+#' @param ... further arguments passed to or from other methods.
 #'
 #' @references Medeiros, R. M. R., Bourguignon, M. (2020). Mean and
 #'     dispersion regression model for paired count data with
@@ -15,19 +14,19 @@ NULL
 
 # Print
 #' @export
-print.sdlrm <- function(object)
+print.sdlrm <- function(x, ...)
 {
   cat("Call:\n")
-  print(object$call)
+  print(x$call)
   cat("\nmean Coefficients:\n")
-  print((object$coefficients)$mean)
+  print((x$coefficients)$mean)
   cat("\ndispersion Coefficients:\n")
-  print((object$coefficients)$dispersion)
+  print((x$coefficients)$dispersion)
 }
 
 # Summary
 #' @export
-summary.sdlrm <- function(object)
+summary.sdlrm <- function(object, ...)
 {
   n <- object$n.obs
   p <- object$p
@@ -68,7 +67,7 @@ summary.sdlrm <- function(object)
   BIC <- as.numeric(object$BIC); names(BIC) <- " "
 
   if (!is.null(object$test)){
-    p.val <- pchisq(object$test, k-1, lower.tail = FALSE)
+    p.val <- stats::pchisq(object$test, k-1, lower.tail = FALSE)
     TAB.test <- rbind(object$test,p.val)
     colnames(TAB.test) <- c("S","W","LR","G")
     rownames(TAB.test) <- c("Value", "P value")
@@ -86,41 +85,41 @@ summary.sdlrm <- function(object)
 
 # Print summary
 #' @export
-print.summary.sdlrm <- function(object)
+print.summary.sdlrm <- function(x, ...)
 {
   cat("Call:\n")
-  print(object$call)
+  print(x$call)
   cat("\nSummary for residuals:\n")
-  print(object$residuals)
+  print(x$residuals)
   cat("\n----------------------------------------------------------------\n")
   cat("Mean:\n")
   cat("Coefficients:\n")
-  stats::printCoefmat(object$mean)
+  stats::printCoefmat(x$mean)
   cat("\n----------------------------------------------------------------\n")
   cat("Dispersion:\n")
-  cat("\nLink function:",object$link,"\n")
+  cat("\nLink function:",x$link,"\n")
   cat("Coefficients:\n")
-  stats::printCoefmat(object$dispersion)
+  stats::printCoefmat(x$dispersion)
   cat("\n----------------------------------------------------------------")
-  if (!is.null(object$test)){
+  if (!is.null(x$test)){
     cat("\n\nTest for constant dispersion:\n")
-    print(object$test)
+    print(x$test)
   }
-  cat("\nIn addition, Log-lik value:",object$Log.lik,
-      "\nAIC:",object$AIC,"and BIC:",object$BIC)
+  cat("\nIn addition, Log-lik value:",x$Log.lik,
+      "\nAIC:",x$AIC,"and BIC:",x$BIC)
 }
 
 
 # Plot
 #' @export
 #' @rdname  sdlrm-methods
-plot.sdlrm <- function(object)
+plot.sdlrm <- function(x, ...)
 {
-  y <- object$response
-  rq <- object$residuals
-  mu.h <- object$fitted.values
-  phi.h <- object$phi.h
-  n <- object$n.obs
+  y <- x$response
+  rq <- x$residuals
+  mu.h <- x$fitted.values
+  phi.h <- x$phi.h
+  n <- x$n.obs
 
   graphics::par(mfrow=c(2,2))
   graphics::plot(mu.h, rq, xlab = "Fitted values", ylab = "Residuals", pch = "+")
@@ -159,23 +158,13 @@ logLik.sdlrm <- function(object) {
 }
 
 # AIC
+#' @param k numeric, the penalty per parameter to be used; the default k = 2 is the classical AIC.
 #' @export
 #' @rdname sdlrm-methods
-AIC.sdlrm <- function(object, k = 2) {
+AIC.sdlrm <- function(object, ..., k = 2) {
   AIC <- - 2 * object$logLik + k * (object$p + object$k)
   class(AIC) <- "AIC"
   return(AIC)
-}
-
-# BIC
-#' @export
-#' @param numeric, the penalty per parameter to be used; the default k = 2 is the classical AIC.
-#' @rdname sdlrm-methods
-BIC.sdlrm <- function(object) {
-  n <- object$n.obs
-  BIC <- - 2 * object$logLik + log(n) * (object$p + object$k)
-  class(BIC) <- "BIC"
-  return(BIC)
 }
 
 # Parameter estimates

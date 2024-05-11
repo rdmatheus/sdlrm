@@ -5,8 +5,16 @@
 \alias{mle_sdl}
 \title{Maximum likelihood estimates for the Sdl regression coefficients}
 \usage{
-mle_sdl(y, X, Z, link = "log", control = sdl_control(...),
-  eq_constraint = NULL, eq_constraint_jac = NULL, ...)
+mle_sdl(
+  y,
+  X,
+  Z,
+  link = "log",
+  control = sdl_control(...),
+  eq_constraint = NULL,
+  eq_constraint_jac = NULL,
+  ...
+)
 }
 \arguments{
 \item{y}{a numeric integer-valued vector of the response variable.}

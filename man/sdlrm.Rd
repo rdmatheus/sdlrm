@@ -5,8 +5,14 @@
 \alias{fit_sdl}
 \title{Sdl Regression for Integer-Valued Data}
 \usage{
-sdlrm(formula, data, link = NULL, disp_test = FALSE,
-  control = sdl_control(...), ...)
+sdlrm(
+  formula,
+  data,
+  link = NULL,
+  disp_test = FALSE,
+  control = sdl_control(...),
+  ...
+)
 
 fit_sdl(y, X, Z = NULL, link = "log", control = sdl_control())
 }

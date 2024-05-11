@@ -4,7 +4,8 @@
 \name{pss}
 \alias{pss}
 \title{Stress in prison}
-\format{A data frame with 26 observations on the following 4 variables.
+\format{
+A data frame with 26 observations on the following 4 variables.
 
 \itemize{
 \item \code{Group}: a factor, which identifies whether the individual belongs to the control or the experimental group.
@@ -12,7 +13,8 @@
 \item \code{PSSafter}: stress measurement before training.
 \item \code{Diff}: the difference between the stress levels obtained
  at the end of the experiment and at the beginning: \code{PSSafter} - \code{PSSbefore}.
-}}
+}
+}
 \usage{
 data(pss)
 }
