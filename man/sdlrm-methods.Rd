@@ -53,6 +53,41 @@ be printed in values. The default, \code{getOption("digits")}.}
 \description{
 Methods for \code{"sdlrm"} objects.
 }
+\examples{
+# Data set: pss (for description run ?pss)
+barplot(table(pss$difference), xlab = "PSS index difference", ylab = "Frequency")
+boxplot(pss$difference ~ pss$group, xlab = "Group", ylab = "PSS index difference")
+
+# Fit a double model (mode = 1)
+fit <- sdlrm(difference ~ group | group, data = pss, xi = 1)
+
+# Print
+fit
+
+# Summary
+summary(fit)
+
+# Coef
+coef(fit)
+coef(fit, parm = "dispersion)
+coef(fit, parm = "full)
+
+# vcov
+vcov(fit)
+vcov(fit, parm = "dispesion")
+vcov(fit, parm = "full")
+
+# Log-likelihood value
+logLik(fit)
+
+# AIC and BIC
+AIC(fit)
+AIC(fit, k = log(fit$nobs))
+
+# Model matrices
+model.matrix(fit)
+model.matrix(fit, "dispersion")
+}
 \author{
 Rodrigo M. R. de Medeiros <\email{rodrigo.matheus@ufrn.br}>
 }
