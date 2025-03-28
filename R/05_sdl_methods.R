@@ -509,8 +509,8 @@ predict.sdlrm <- function(object, newdata = NULL,
 #' Six plots (selectable by \code{which}) are currently available:
 #' a plot of residuals against fitted values, a plot of residuals against
 #' the observation indices, a Normal Q-Q plot, a barplot with comparisons of the
-#' observed and fitted frequencies, a plot of the sample autocorelations
-#' of the residuals, and a plot of the sample partial autocorelations
+#' observed and fitted frequencies, a plot of the sample autocorrelations
+#' of the residuals, and a plot of the sample partial autocorrelations
 #' of the residuals.
 #'
 #' @param x an object of class \code{"sdlrm"}.
