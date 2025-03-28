@@ -1,16 +1,15 @@
 Package: sdlrm
 Type: Package
-Title: Sdl Regression for Integer-Valued Data
+Title: Modified SDL Regression for Integer-Valued and Paired Discrete Data
 Version: 0.1.0
 Authors@R: person("Rodrigo", "Matheus",
     email = "rodrigo.matheus@live.com",
     role = c("aut", "cre"))
-Description: Implementation of the SDL regression model. Provide a set
-    of functions for a complete analysis of integer-valued data, in
-    which it is assumed that the dependent variable follows a Skew
-    Discrete Laplace (SDL) distribution. This regression model is also
-    useful for the analysis of experimental studies in which a paired
-    count data is observed.
+Description: Implementation of the modified SDL regression model. The sdlrm package provide a set
+    of functions for a complete analysis of integer-valued data, in which it is assumed that the
+    dependent variable follows a modified skew discrete Laplace (SDL) distribution. This regression
+    model is useful for the analysis of integer-valued data and experimental studies in which
+    paired discrete observations are collected.
 URL: https://github.com/Rodrigo-sgj/sdlrm
 License: GPL-3
 Encoding: UTF-8
