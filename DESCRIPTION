@@ -2,8 +2,8 @@ Package: sdlrm
 Type: Package
 Title: Modified SDL Regression for Integer-Valued and Paired Discrete Data
 Version: 0.1.0
-Authors@R: person("Rodrigo", "Matheus",
-    email = "rodrigo.matheus@live.com",
+Authors@R: person("Rodrigo", "Medeiros",
+    email = "rodrigo.matheus@ufrn.br",
     role = c("aut", "cre"))
 Description: Implementation of the modified SDL regression model. The sdlrm package provide a set
     of functions for a complete analysis of integer-valued data, in which it is assumed that the

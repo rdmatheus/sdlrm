@@ -69,12 +69,12 @@ summary(fit)
 
 # Coef
 coef(fit)
-coef(fit, parm = "dispersion)
-coef(fit, parm = "full)
+coef(fit, parm = "dispersion")
+coef(fit, parm = "full")
 
 # vcov
 vcov(fit)
-vcov(fit, parm = "dispesion")
+vcov(fit, parm = "dispersion")
 vcov(fit, parm = "full")
 
 # Log-likelihood value
