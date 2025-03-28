@@ -53,7 +53,6 @@
 #' @author Rodrigo M. R. de Medeiros <\email{rodrigo.matheus@ufrn.br}>
 #'
 #' @examples
-#'
 #' # Data set: pss (for description run ?pss)
 #' barplot(table(pss$difference), xlab = "PSS index difference", ylab = "Frequency")
 #' boxplot(pss$difference ~ pss$group, xlab = "Group", ylab = "PSS index difference")
@@ -118,7 +117,11 @@ sdlrm <- function(formula, data, subset, na.action, phi.link = "log", xi = 0,
   names(beta) <- colnames(X)
   names(gamma) <- colnames(Z)
 
-  vcov <- K_sdl(opt$par, X, Z, phi.link, xi, inverse = TRUE)
+  if (!is.null(opt$hessian)) {
+    vcov <- solve(-opt$hessian)
+  } else {
+    vcov <- K_sdl(opt$par, X, Z, phi.link, xi, inverse = TRUE)
+  }
   rownames(vcov) <- colnames(vcov) <- c(colnames(X), colnames(Z))
 
   out <- list(coefficients = list(mean = beta, dispersion = gamma),

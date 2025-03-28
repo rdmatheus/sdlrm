@@ -41,6 +41,22 @@ Optimization parameters passed to \code{\link[stats]{optim}} for the fit of an m
     \code{\link[betareg]{betareg.control}} from the \code{betareg} package. Its primary purpose
     is to gather all the optimization control arguments in a single function.
 }
+\examples{
+# Data set: pss (for description run ?pss)
+barplot(table(pss$difference), xlab = "PSS index difference", ylab = "Frequency")
+boxplot(pss$difference ~ pss$group, xlab = "Group", ylab = "PSS index difference")
+
+## Fit of the model using the Fisher information matrix to obtain the covariance
+## matrix of the coefficients
+fit1 <- sdlrm(difference ~ group, data = pss, xi = 1)
+
+## Fit of the model using the numerical Hessian matrix provided by optim
+fit2 <- sdlrm(difference ~ group, data = pss, xi = 1, hessian = TRUE)
+
+## Compare the reported standard errors
+summary(fit1)
+summary(fit2)
+}
 \references{
 Cribari-Neto, F., and Zeileis, A. (2010). Beta regression in R.
     \emph{Journal of statistical software}, 34, 1-24.

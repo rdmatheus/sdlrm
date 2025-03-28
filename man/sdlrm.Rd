@@ -70,7 +70,6 @@ Fit of the modified SDL regression model via maximum likelihood for a
     and the mode (\code{xi}).
 }
 \examples{
-
 # Data set: pss (for description run ?pss)
 barplot(table(pss$difference), xlab = "PSS index difference", ylab = "Frequency")
 boxplot(pss$difference ~ pss$group, xlab = "Group", ylab = "PSS index difference")

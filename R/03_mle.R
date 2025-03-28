@@ -25,6 +25,22 @@
 #' @author Rodrigo M. R. de Medeiros <\email{rodrigo.matheus@ufrn.br}>
 #'
 #' @return A list with the arguments specified.
+#'
+#' @examples
+#' # Data set: pss (for description run ?pss)
+#' barplot(table(pss$difference), xlab = "PSS index difference", ylab = "Frequency")
+#' boxplot(pss$difference ~ pss$group, xlab = "Group", ylab = "PSS index difference")
+#'
+#' ## Fit of the model using the Fisher information matrix to obtain the covariance
+#' ## matrix of the coefficients
+#' fit1 <- sdlrm(difference ~ group, data = pss, xi = 1)
+#'
+#' ## Fit of the model using the numerical Hessian matrix provided by optim
+#' fit2 <- sdlrm(difference ~ group, data = pss, xi = 1, hessian = TRUE)
+#'
+#' ## Compare the reported standard errors
+#' summary(fit1)
+#' summary(fit2)
 #' @export
 sdl_control <- function(method = "BFGS", maxit = 8000, hessian = FALSE,
                         start = NULL, reltol = 1e-10, ...) {
