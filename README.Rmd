@@ -9,21 +9,23 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "80%",
-  fig.align = "center"
+  out.width = "90%",
+  fig.align = "center",
+  fig.asp = 0.61
 )
 ```
 
-# `sdlrm`: Sdl Regression for Integer-Valued and Paired Count Data
+# `sdlrm`: Modified SDL Regression for Integer-Valued and Paired Count Data
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/rdmatheus/sdlrm/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rdmatheus/sdlrm/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-> Rodrigo M. R. Medeiros                                                                                  
-> <rodrigo.matheus@live.com>, IME-USP
+> Rodrigo M. R. de Medeiros       
+> Universidade Federal do Rio Grande do Norte, UFRN
+> <rodrigo.matheus@ufrn.br>
 
-Implementation of the SDL regression model proposed by Medeiros and Bourguignon (2020). The `sdlrm` package provide a set of functions for a complete analysis of integer-valued data, in which it is assumed that the dependent variable follows a Skew Discrete Laplace (SDL) distribution. This regression model is also useful for the analysis of experimental studies in which a paired count data is observed.
+Implementation of the modified SDL regression model proposed by Medeiros and Bourguignon (2025). The `sdlrm` package provide a set of functions for a complete analysis of integer-valued data, in which it is assumed that the dependent variable follows a modified skew discrete Laplace (SDL) distribution. This regression model is useful for the analysis of integer-valued data and experimental studies in which paired discrete observations are collected.
 
 ## Installation
 
@@ -42,96 +44,71 @@ After installing the devtools package, if you are using Windows, install the mos
 ## Example
 
 This package provide complete estimation and inference for the parameters as well as normal probability plots of residuals with a simulated envelope, useful for assessing the goodness-of-fit of the model. The implementation is straightforward and similar to other popular packages, like `betareg` and `glm`, where the main function is `sdlrm()`. Below is an example of some functions usage and available methods.
-``` r
+```{r}
+# Loading the sdlrm package
 library(sdlrm)
 
 # Data visualization (Description: ?pss)
 ```
 
 ![](man/figures/fig1a.png)
-
-``` r
-# Fit a double model (mean and dispersion) with a test for constant dispersion
-
-fit <- sdlrm(Diff ~ Group | Group, data = pss, disp_test = TRUE)
+```{r}
+# Fit a double model (mean and dispersion)
+fit0 <- sdlrm(difference ~ group | group, data = pss)
 
 # Print
-
-fit
-#> 
-#> Call:
-#> sdlrm(formula = Diff ~ Group | Group, data = pss, disp_test = TRUE)
-#> 
-#> mean Coefficients:
-#> [1]   7.363636 -11.296970
-#> 
-#> dispersion Coefficients:
-#> [1]  2.6555938 -0.5875912
+fit0
 
 # Summary
+summary(fit0)
+```
 
+By default, the mode ($\xi$) of the modified SDL distribution is fixed at $\xi = 0$. It is possible to specify a non-zero mode (it must be an integer value) using the `xi` argument. Alternatively, this parameter can be estimated via profile likelihood using the `choose_mode()` function:
+```{r}
+## Mode estimation via profile likelihood
+mode_estimation <- choose_mode(fit0)
+```
+
+The `mode_estimation` object, of class `“choose_mode”`, consists of a list whose elements represent a modified SDL regression fit for each value specified for the mode (by default, the sequence $-5, -4, \ldots, 4, 5$). We see that $\xi = 1$ generates the highest profiled likelihood. 
+```{r}
+## Double model with xi = 1
+fit1 <- mode_estimation[[1]]
+```
+
+The constant dispersion test in the modified SDL regression can be performed with the `disp_test()` function:
+```{r}
+## Test for constant dispersion
+disp_test(fit1)
+```
+The tests do not reject the null hypothesis of constant dispersion. We can then specify an adjustment with regressors only on the mean:
+```{r}
+## Fit with constant dispersion and mode = 1
+fit <- sdlrm(difference ~ group, data = pss, xi = 1)
+
+## Summary
 summary(fit)
-#>
-#> Call:
-#> sdlrm(formula = Diff ~ Group | Group, data = pss, disp_test = TRUE)
-#> 
-#> Summary for residuals:
-#>       Mean       Sd  Skewness Kurtosis
-#>   0.012713 0.966192 -0.177681 1.800122
-#> 
-#> ----------------------------------------------------------------
-#> Mean:
-#> Coefficients:
-#>             Estimate Std. Error t value  Pr(>|t|)   
-#> (Intercept)   7.3636     3.6010  2.0449  0.040867 * 
-#> GroupSport  -11.2970     4.0119 -2.8159  0.004865 **
-#> ---
-#> Signif. codes:  
-#>   0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#> 
-#> ----------------------------------------------------------------
-#> Dispersion:
-#> 
-#> Link function: log 
-#> Coefficients:
-#>             Estimate Std. Error t value  Pr(>|t|)    
-#> (Intercept)  2.65559    0.32089  8.2758    <2e-16 ***
-#> GroupSport  -0.58759    0.43006 -1.3663    0.1718    
-#> ---
-#> Signif. codes:  
-#>   0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#> 
-#> ----------------------------------------------------------------
-#> 
-#> Test for constant dispersion:
-#>                 S         W        LR         G
-#> Value   1.9292900 1.8667800 1.8920900 1.8964500
-#> P value 0.1648361 0.1718443 0.1689664 0.1684762
-#>                 
-#> In addition, Log-lik value: -88.56555 
-#> AIC: 185.1311 and BIC: 190.1635
-
-# Plot
-
-plot(fit)
 ```
-![](man/figures/fig2a.png)
-
-``` r
-# Envelope
-
-envel_sdl(fit)
-```
-
-![](man/figures/fig3a.png)
-![alt text](man/figures/fig3b.png)
-
-Currently, the methods implemented for "sdlrm" objects are
-``` r
+Currently, the methods implemented for `"sdlrm"` objects are
+```{r}
 methods(class = "sdlrm")
-#>
-#> [1] AIC          BIC          coef         logLik      
-#> [5] model.matrix plot         print        summary     
-#> [9] vcov        
-#> see '?methods' for accessing help and source code
 ```
+The `plot()` method provides diagnostic plots of the residuals. By default, randomized quantile residuals are used:
+```{r}
+par(mfrow = c(1, 2))
+plot(fit, ask = FALSE)
+par(mfrow = c(1, 1))
+```
+The `envelope()` function plots the normal probability of the residuals with a simulated envelope:
+```{r}
+## Building the envelope plot
+envel <- envelope(fit, plot = FALSE)
+
+par(mfrow = c(1, 2))
+# Plot for the randomized quantile residuals (default)
+plot(envel)
+
+# Plot for the Pearson residuals
+plot(envel, type = "pearson")
+par(mfrow = c(1, 1))
+```
+
