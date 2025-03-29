@@ -1,7 +1,7 @@
 Package: sdlrm
 Type: Package
 Title: Modified Skew Discrete Laplace Regression for Integer-Valued and Paired Discrete Data
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: person("Rodrigo", "Medeiros",
     email = "rodrigo.matheus@ufrn.br",
     role = c("aut", "cre"))
