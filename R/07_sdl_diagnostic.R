@@ -1,51 +1,3 @@
-# #' @name expected_sdl
-# #'
-# #' @title Expected Frequencies by the SDL Regression
-# #'
-# #' @description Provides the expected frequencies for a fit of
-# #' the Sdl regression model according to the definition given in
-# #' Kleiber and Zeileis (2016).
-# #'
-# #' @param y vector of the observed values of the response variable.
-# #' @param mu vector of the fitted values.
-# #' @param phi vector of the fitted values for the dispersion parameter.
-# #'
-# #' @return Expected frequencies for a fit of the Sdl regression model
-# #' to a dataset.
-# #'
-# #'
-# #' @references  Kleiber, C., & Zeileis, A. (2016). Visualizing count
-# #'     data regressions using rootograms. The American Statistician,
-# #'     70, 296-303
-# #'
-# #' @references Medeiros, R. M. R., Bourguignon, M. (2020). Mean and
-# #'     dispersion regression model for paired count data with
-# #'     application to quality of life in prisons.
-# #'
-# #' @author Rodrigo M. R. de Medeiros <\email{rodrigo.matheus@live.com}>
-# #'
-# #' @export
-# #'
-# #' @examples
-# #'
-# #' # Sample size
-# #' n <- 100
-# #
-# #' # Covariates
-# #' X <- cbind(rep(1,n), runif(n, 0,1), runif(n,0,1))
-# #' Z <- cbind(rep(1,n), runif(n, 0,1), runif(n,0,1))
-# #'
-# #' # Parameters and relations
-# #' beta <- c(1, 1.2, 0.2)
-# #' gama <- c(2, 1.5, 1.2)
-# #'
-# #' mu <- exp(X%*%beta)
-# #' phi <- exp(Z%*%gama)
-# #'
-# #' y <- rsdl(n, mu, phi, xi = 0)
-# #'
-# #' expect_sdl(y, mu, phi, xi = 0)
-# #'
 expect_sdl <- function(y, mu, phi, xi){
 
   x <- sort(unique(y))
@@ -63,13 +15,13 @@ expect_sdl <- function(y, mu, phi, xi){
 
 #' @name envelope
 #'
-#' @title Envelope Plot for the Residuals of a Modified SDL Regression Fit
+#' @title Envelope Plot for the Residuals of a Modified Skew Discrete Laplace Regression Fit
 #'
 #' @description Provides the normal probability plot with simulated
 #'     envelope of Pearson residuals and randomized quantile residuals
-#'     resulting from the modified SDL regression fit.
+#'     resulting from the modified skew discrete Laplace (SDL) regression fit.
 #'
-#' @param object,x an object of class \code{"\link{sdlrm}"}.
+#' @param object,x an object of class \code{"sdlrm"}, a result of a call to \code{\link{sdlrm}}.
 #' @param type character; specifies which residual should be produced in the
 #'     envelope plot. The available options are \code{"quantile"} (default) and
 #'     \code{"pearson"} ((y - mean) / sd).
@@ -82,13 +34,13 @@ expect_sdl <- function(y, mu, phi, xi){
 #'     considerably in applications with a large sample size.
 #' @param ... further arguments passed to or from other methods.
 #'
-#' @references
-#' Medeiros, R. M. R., and Bourguignon, M. (2025). Modified skew discrete Laplace regression models
-#'     for integer valued data with applications to paired samples
+#' @references Medeiros, R. M. R., and Bourguignon, M. (2025). Modified skew discrete Laplace
+#'     regression models for integer valued data with applications to paired samples.
+#'     \emph{Manuscript submitted for publication.}
 #'
 #' @author Rodrigo M. R. de Medeiros <\email{rodrigo.matheus@ufrn.br}>
 #'
-#' @return \code{envelope} returns an \code{"sdlrm_envel"} object which consists of
+#' @returns \code{envelope} returns an \code{"sdlrm_envel"} object which consists of
 #'     a list with the following components:
 #' \describe{
 #'   \item{residuals}{a list with the quantile and pearson residuals resulting from the
@@ -103,7 +55,6 @@ expect_sdl <- function(y, mu, phi, xi){
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' ## Data set: pss (for description run ?pss)
 #' barplot(table(pss$difference), xlab = "PSS index difference", ylab = "Frequency")
 #' boxplot(pss$difference ~ pss$group, xlab = "Group", ylab = "PSS index difference")
@@ -123,7 +74,6 @@ expect_sdl <- function(y, mu, phi, xi){
 #'
 #' # Plot for the Pearson residuals
 #' plot(envel, type = "pearson")
-#' }
 envelope <- function(object, nsim = 99, progressBar = TRUE, plot = TRUE, ...)
 {
 

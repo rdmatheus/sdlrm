@@ -36,10 +36,10 @@ value by a factor of reltol * (abs(val) + reltol) at a step. Defaults to \code{1
 A list with the arguments specified.
 }
 \description{
-Optimization parameters passed to \code{\link[stats]{optim}} for the fit of an modified SDL regression
-    model via \code{\link{sdlrm}}. This function acts in the same spirit as
-    \code{\link[betareg]{betareg.control}} from the \code{betareg} package. Its primary purpose
-    is to gather all the optimization control arguments in a single function.
+Optimization parameters passed to \code{\link[stats]{optim}} for the fit of an modified skew
+    discrete Laplace (SDL) regression model via \code{\link{sdlrm}}. This function acts in the
+    same spirit as \code{\link[betareg]{betareg.control}} from the \code{betareg} package. Its
+    primary purpose is to gather all the optimization control arguments in a single function.
 }
 \examples{
 # Data set: pss (for description run ?pss)

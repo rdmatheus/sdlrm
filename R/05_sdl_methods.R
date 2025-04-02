@@ -1,12 +1,34 @@
+# Additional methods --------------------------------------------------------------------------
 #' @name sdlrm-methods
-#' @title Methods for \code{"sdlrm"} objects.
-#' @param x,object an object of class \code{"sdlrm"}.
+#'
+#' @title Extract Information From a Modified Skew Discrete Laplace Regression Fit
+#'
+#' @description Additional methods for \code{"sdlrm"} objects.
+#'
+#' @param object an object of class \code{"sdlrm"}, a result of a call to \code{\link{sdlrm}}.
 #' @param k numeric, the penalty per parameter to be used; the default
 #'     \code{k = 2} is the classical AIC.
 #' @param formula a model \link{formula} or \link{terms} object or an \code{"sdlrm"} object.
 #' @param ... further arguments passed to or from other methods.
 #'
 #' @author Rodrigo M. R. de Medeiros <\email{rodrigo.matheus@ufrn.br}>
+#'
+#' @returns
+#' \itemize{
+#' \item \code{model.frame} returns a \code{data.frame} containing the variables required
+#'     by \code{formula} and any additional arguments provided via \code{...}.
+#' \item \code{model.matrix} returns the design matrix used in the regression structure,
+#'     as specified by the \code{parm} argument.
+#' \item \code{coef} returns a numeric vector of estimated regression coefficients, based
+#'     on the \code{parm} argument. If \code{parm = "full"}, it returns a list with the
+#'     components \code{"mean"} and \code{"dispersion"}, each containing the corresponding
+#'     coefficient estimates.
+#' \item \code{vcov} returns the asymptotic covariance matrix of the regression coefficients,
+#'     based on the \code{parm} argument.
+#' \item \code{logLik} returns the log-likelihood value of the fitted model.
+#' \item \code{AIC} returns a numeric value representing the Akaike Information Criterion
+#'     (AIC), Bayesian Information Criterion, or another criterion, depending on \code{k}.
+#' }
 #'
 #' @examples
 #' # Data set: pss (for description run ?pss)
@@ -15,12 +37,6 @@
 #'
 #' # Fit a double model (mode = 1)
 #' fit <- sdlrm(difference ~ group | group, data = pss, xi = 1)
-#'
-#' # Print
-#' fit
-#'
-#' # Summary
-#' summary(fit)
 #'
 #' # Coef
 #' coef(fit)
@@ -147,15 +163,20 @@ AIC.sdlrm <- function(object, ..., k = 2) {
 }
 
 
-# Residuals
+# Residuals -----------------------------------------------------------------------------------
 #' @name residuals.sdlrm
-#' @title Extract Model Residuals for a Modified SDL Regression
+#' @title Extract Model Residuals for a Modified Skew Discrete Laplace Regression Fit
 #'
-#' @param object an \code{"sdlrm"} object.
+#' @description Residuals resulting from fitting a modified Laplace discrete skew regression.
+#'
+#' @param object an object of class \code{"sdlrm"}, a result of a call to \code{\link{sdlrm}}.
 #' @param type character; specifies which residual should be extracted.
-#'     The available arguments are "quantile" (default), "pearson",
-#'     and "response" (raw residuals, y - mu).
+#'     The available arguments are \code{"quantile"} (randomized quantile
+#'     residuals; default), \code{"pearson"} (Pearson residuals, i.e., (y - mean) / sd),
+#'     and \code{"response"} (raw residuals, i.e., y - mean).
 #' @param ... further arguments passed to or from other methods.
+#'
+#' @returns A vector with the required residuals.
 #'
 #' @export
 #'
@@ -223,46 +244,56 @@ residuals.sdlrm <- function(object,
 }
 
 
-# Print
-#' @rdname sdlrm-methods
+# Summary method ------------------------------------------------------------------------------
+#'
+#' @name summary.sdlrm
+#'
+#' @title Summarizing a Modified Skew Discrete Laplace Regression Fit
+#'
+#' @description \code{summary} method for class \code{"sdlrm"}.
+#'
+#' @param object an object of class \code{"sdlrm"}, a result of a call to \code{\link{sdlrm}}.
+#' @param x an object of class \code{"summary.sdlrm"}, a result of a call to \code{summary.sdlrm}.
 #' @param digits a non-null value for digits specifies the minimum number of significant digits to
-#'     be printed in values. The default, \code{getOption("digits")}.
+#'     be printed in values.
+#' @param ... further arguments passed to or from other methods.
+#'
+#' @returns The function \code{summary.sdlrm} returns an object of class \code{"summary.sdlrm"},
+#'     which consists of a list with the following components:
+#'  \describe{
+#'     \item{call}{the original function call, given in \code{object}.}
+#'     \item{mean}{summary statistics for the mean regression structure.}
+#'     \item{dispersion}{summary statistics for the dispersion regression structure.}
+#'     \item{xi}{the specified mode for the model.}
+#'     \item{phi.link}{the link function used for the dispersion parameter model.}
+#'     \item{residuals}{the randomized quantile residuals.}
+#'     \item{pR2}{the pseudo-R2 for integer-valued regression models, as introduced by
+#'         Medeiros and Bourguignon (2025).}
+#'     \item{logLik}{log-likelihood value of the fitted model.}
+#'     \item{AIC, BIC}{Akaike and Bayesian information criteria.}
+#'  }
+#'
 #' @export
-print.sdlrm <- function(x, digits = getOption("digits"), ...)
-{
-
-  p <- length(x$coefficients$mean)
-  k <- length(x$coefficients$dispersion)
-  n <- x$nobs
-
-  cat("\nCall:\n")
-  print(x$call)
-  if(x$optim.pars$convergence != 0) {
-
-   cat("\nmodel did not converge\n")
-
-  }else{
-
-    cat("\nMean Coefficients:\n")
-    print(round(stats::coefficients(x, "mean"), digits))
-
-    cat("\nDispersion Coefficients:\n")
-    print(round(stats::coefficients(x, "dispersion"), digits))
-
-    cat("\n---",
-        "\nLog-lik value: ", round(stats::logLik(x), digits),
-        "\nMode: ", x$xi,
-        "\nAIC: ", round(stats::AIC(x), digits),
-        " and BIC: ", round(stats::AIC(x, k = log(n)), digits), "\n", sep = "")
-
-  }
-
-  invisible(x)
-}
-
-# Summary
-#' @rdname sdlrm-methods
-#' @export
+#'
+#' @author Francisco F. de Queiroz <\email{felipeq@ime.usp.br}>
+#' @author Rodrigo M. R. de Medeiros <\email{rodrigo.matheus@ufrn.br}>
+#'
+#' @references Medeiros, R. M. R., and Bourguignon, M. (2025). Modified skew discrete Laplace
+#'     regression models for integer valued data with applications to paired samples.
+#'     \emph{Manuscript submitted for publication.}
+#'
+#' @examples
+#' # Data set: pss (for description run ?pss)
+#' barplot(table(pss$difference), xlab = "PSS index difference", ylab = "Frequency")
+#' boxplot(pss$difference ~ pss$group, xlab = "Group", ylab = "PSS index difference")
+#'
+#' # Fit with a model only for the mean (mode = 1)
+#' fit0 <- sdlrm(difference ~ group, data = pss, xi = 1)
+#' summary(fit0)
+#'
+#' # Fit a double model (mean and dispersion)
+#' fit <- sdlrm(difference ~ group | group, data = pss, xi = 1)
+#' summary(fit)
 summary.sdlrm <- function(object, ...)
 {
 
@@ -271,12 +302,6 @@ summary.sdlrm <- function(object, ...)
 
   ## Summary for quantile residuals
   res <- stats::residuals(object, type = "quantile")
-  skewness <- mean((res - mean(res))^3) / (stats::sd(res)^3)
-  kurtosis <- mean((res - mean(res))^4) / (stats::sd(res)^4)
-  TAB.residuals <- round(cbind(mean(res), stats::sd(res),
-                               skewness, kurtosis), 6)
-  colnames(TAB.residuals) <- c("Mean", "Std. dev.", "Skewness", "Kurtosis")
-  rownames(TAB.residuals) <- " "
 
   # Summary for the mean coefficients
   est.beta <- stats::coef(object, "mean")
@@ -310,11 +335,11 @@ summary.sdlrm <- function(object, ...)
   pR2 <- stats::cor(obs, exp)^2
 
   out <- list(call = object$call,
-              residuals = TAB.residuals,
-              phi.link = object$phi.link,
               mean = TAB.beta,
               dispersion = TAB.gamma,
               xi = object$xi,
+              phi.link = object$phi.link,
+              residuals = res,
               pR2 = pR2,
               logLik = stats::logLik(object),
               AIC = stats::AIC(object),
@@ -327,17 +352,24 @@ summary.sdlrm <- function(object, ...)
 }
 
 # Print summary
-#' @rdname sdlrm-methods
+#' @rdname summary.sdlrm
 #' @export
 print.summary.sdlrm <- function(x, digits = getOption("digits"), ...)
 {
   cat("Call:\n")
   print(x$call)
 
-  cat("\n\nSummary for quantile residuals:\n")
-  print(round(x$residuals, digits))
+  cat("\n\nSummary for randomized quantile residuals:\n")
+  res <- x$residuals
+  skewness <- mean((res - mean(res))^3) / (stats::sd(res)^3)
+  kurtosis <- mean((res - mean(res))^4) / (stats::sd(res)^4)
+  TAB.residuals <- round(cbind(mean(res), stats::sd(res),
+                               skewness, kurtosis), 6)
+  colnames(TAB.residuals) <- c("Mean", "Std. dev.", "Skewness", "Kurtosis")
+  rownames(TAB.residuals) <- " "
+  print(round(TAB.residuals, digits))
 
-  cat("\n\nMean coefficients:\n")
+    cat("\n\nMean coefficients:\n")
   stats::printCoefmat(round(x$mean, digits))
 
   cat("\n\nDispersion coefficients with", x$phi.link, "link:\n")
@@ -356,18 +388,19 @@ print.summary.sdlrm <- function(x, digits = getOption("digits"), ...)
 
 
 
-#' Predict Method for a Modified SDL Fit
+# Predict -------------------------------------------------------------------------------------
+#' Predict Method for a Modified Skew Discrete Laplace Regression Fit
 #'
-#' Obtains predictions from a fitted modified SDL regression object.
+#' Obtains predictions from a fitted modified skew discrete Laplace regression object.
 #'
-#' @param object an \code{"sdlrm"} object.
+#' @param object an object of class \code{"sdlrm"}, a result of a call to \code{\link{sdlrm}}.
 #' @param newdata optionally, a data frame in which to look for variables
 #'     with which to predict. If omitted, the fitted linear predictors are
 #'     used.
 #' @param type the type of prediction required. The default is on the scale of
 #'     the response variable \code{("response")}, that is, the fitted values
 #'     (fitted means). The alternative \code{"dispersion"} provides the fitted
-#'     dispersion, while \code{"variance"} provides the fitted variances. Finally,
+#'     dispersion parameters, while \code{"variance"} provides the fitted variances. Finally,
 #'     the option \code{"quantile"} gives the fitted quantiles in the order
 #'     specified via \code{at}.
 #' @param at the order of the quantile to be predicted if
@@ -377,9 +410,13 @@ print.summary.sdlrm <- function(x, digits = getOption("digits"), ...)
 #'     values in \code{newdata}. The default is to predict \code{NA}.
 #' @param ...  arguments passed to or from other methods.
 #'
-#' @return A vector of predictions.
+#' @return A vector with the required predictions.
 #'
 #' @author Rodrigo M. R. de Medeiros <\email{rodrigo.matheus@ufrn.br}>
+#'
+#' @references Medeiros, R. M. R., and Bourguignon, M. (2025). Modified skew discrete Laplace
+#'     regression models for integer valued data with applications to paired samples.
+#'     \emph{Manuscript submitted for publication.}
 #'
 #' @export
 #'
@@ -503,26 +540,44 @@ predict.sdlrm <- function(object, newdata = NULL,
 }
 
 
-# Plot
-#' Diagnostic Plots for the Modified SDL Regression
+
+# Plot ----------------------------------------------------------------------------------------
+#' Diagnostic Plots for the Modified Skew Discrete Laplace Regression
 #'
-#' Six plots (selectable by \code{which}) are currently available:
-#' a plot of residuals against fitted values, a plot of residuals against
-#' the observation indices, a Normal Q-Q plot, a barplot with comparisons of the
-#' observed and fitted frequencies, a plot of the sample autocorrelations
-#' of the residuals, and a plot of the sample partial autocorrelations
-#' of the residuals.
+#' This function provides plots for diagnostic analysis of a modified skew discrete
+#'     Laplace regression fit.
 #'
-#' @param x an object of class \code{"sdlrm"}.
+#' @param x an object of class \code{"sdlrm"}, a result of a call to \code{\link{sdlrm}}.
 #' @param which numeric; if a subset of the plots is required, specify a subset
 #'     of the numbers \code{1:6}.
 #' @param type character; specifies which residual should be produced in the
 #'     envelope plot. The available options are \code{"quantile"} (default),
 #'     \code{"pearson"}, and \code{"response"} (raw residuals, y - mu).
 #' @param ask logical; if \code{TRUE}, the user is asked before each plot.
-#' @param ... further arguments passed to or from other methods.
+#' @param pch,lty,... graphical parameters (see \code{\link[graphics]{par}})
 #'
+#' @details The \code{plot} method for \code{"\link{sdlrm}"} objects provides six types
+#'     of diagnostic plots in the following order:
+#'     \describe{
+#'         \item{Residuals vs fitted values}{a plot of the residuals
+#'             against fitted values.}
+#'         \item{Residuals vs observation indices.}{an index plot of the residuals
+#'             against  observation indices.}
+#'         \item{Normal probability plot}{a normal probability plot of the residuals.}
+#'         \item{Fitted vs observed frequencies}{a bar plot with comparisons of the observed
+#'             and fitted frequencies.}
+#'         \item{Sample autocorrelation plot}{sample autocorrelation function plot of the residuals.}
+#'         \item{Sample partial autocorrelation plot}{sample partial autocorrelation function plot of the residuals.}
+#'      }
+#'
+#'      The \code{which} argument can be used to select a subset of the implemented plots.
+#'      Default is \code{which = 1:4}.
+#'
+#' @author Francisco F. de Queiroz <\email{felipeq@ime.usp.br}>
 #' @author Rodrigo M. R. de Medeiros <\email{rodrigo.matheus@ufrn.br}>
+#'
+#' @return \code{plot} method for \code{"\link{sdlrm}"} objects returns six types
+#'     of diagnostic plots.
 #'
 #' @export
 #'
@@ -552,11 +607,11 @@ predict.sdlrm <- function(object, newdata = NULL,
 #'
 #' # Sample partial autocorelation of residuals
 #' plot(fit, which = 6)
-plot.sdlrm <- function(x, which = 1:2,
+plot.sdlrm <- function(x, which = 1:4,
                        type = c("quantile", "pearson", "response"),
                         ask = prod(graphics::par("mfcol")) < length(which) &&
                           grDevices::dev.interactive(),
-                        ...)
+                       pch = "+", lty = 2, ...)
 {
 
   if(!is.numeric(which) || any(which < 1) || any(which > 6))
@@ -584,15 +639,15 @@ plot.sdlrm <- function(x, which = 1:2,
   ## Residuals versus Fitted values
   if (show[1]){
     graphics::plot(stats::fitted(x), res,
-                   xlab = "Fitted values", ylab = Type, pch = "+", ...)
-    graphics::abline(h = 0, col = "royalblue", lty = 3)
+                   xlab = "Fitted values", ylab = Type, pch = pch, ...)
+    graphics::abline(h = 0, col = "royalblue", lty = lty)
   }
 
   ## Residuals versus index observation
   if (show[2]){
     n <- x$nobs
-    graphics::plot(1:n, res, xlab = "Index", ylab = Type, pch = "+", ...)
-    graphics::abline(h = 0, col= "royalblue", lty = 3)
+    graphics::plot(1:n, res, xlab = "Index", ylab = Type, pch = pch, ...)
+    graphics::abline(h = 0, col= "royalblue", lty = lty)
   }
 
   ## Normal probability plot
@@ -601,8 +656,8 @@ plot.sdlrm <- function(x, which = 1:2,
                   xlab = "Theoretical Quantiles",
                   ylab = "Sample Quantiles",
                   plot.it = TRUE,
-                  frame.plot = TRUE, pch =  "+", ...)
-    graphics::abline(0, 1, col = "royalblue", lty = 2)
+                  frame.plot = TRUE, pch =  pch, ...)
+    graphics::abline(0, 1, col = "royalblue", lty = lty)
   }
 
   ## Expected frequencies

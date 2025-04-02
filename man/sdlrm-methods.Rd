@@ -8,10 +8,7 @@
 \alias{vcov.sdlrm}
 \alias{logLik.sdlrm}
 \alias{AIC.sdlrm}
-\alias{print.sdlrm}
-\alias{summary.sdlrm}
-\alias{print.summary.sdlrm}
-\title{Methods for \code{"sdlrm"} objects.}
+\title{Extract Information From a Modified Skew Discrete Laplace Regression Fit}
 \usage{
 \method{model.frame}{sdlrm}(formula, ...)
 
@@ -24,17 +21,13 @@
 \method{logLik}{sdlrm}(object, ...)
 
 \method{AIC}{sdlrm}(object, ..., k = 2)
-
-\method{print}{sdlrm}(x, digits = getOption("digits"), ...)
-
-\method{summary}{sdlrm}(object, ...)
-
-\method{print}{summary.sdlrm}(x, digits = getOption("digits"), ...)
 }
 \arguments{
 \item{formula}{a model \link{formula} or \link{terms} object or an \code{"sdlrm"} object.}
 
 \item{...}{further arguments passed to or from other methods.}
+
+\item{object}{an object of class \code{"sdlrm"}, a result of a call to \code{\link{sdlrm}}.}
 
 \item{parm}{a character indicating which group of parameters is to be considered in the function.
 The options are \code{"mean"} (default) to obtain the output in relation to the coefficients
@@ -44,14 +37,26 @@ to consider all the parameters,}
 
 \item{k}{numeric, the penalty per parameter to be used; the default
 \code{k = 2} is the classical AIC.}
-
-\item{x, object}{an object of class \code{"sdlrm"}.}
-
-\item{digits}{a non-null value for digits specifies the minimum number of significant digits to
-be printed in values. The default, \code{getOption("digits")}.}
+}
+\value{
+\itemize{
+\item \code{model.frame} returns a \code{data.frame} containing the variables required
+    by \code{formula} and any additional arguments provided via \code{...}.
+\item \code{model.matrix} returns the design matrix used in the regression structure,
+    as specified by the \code{parm} argument.
+\item \code{coef} returns a numeric vector of estimated regression coefficients, based
+    on the \code{parm} argument. If \code{parm = "full"}, it returns a list with the
+    components \code{"mean"} and \code{"dispersion"}, each containing the corresponding
+    coefficient estimates.
+\item \code{vcov} returns the asymptotic covariance matrix of the regression coefficients,
+    based on the \code{parm} argument.
+\item \code{logLik} returns the log-likelihood value of the fitted model.
+\item \code{AIC} returns a numeric value representing the Akaike Information Criterion
+    (AIC), Bayesian Information Criterion, or another criterion, depending on \code{k}.
+}
 }
 \description{
-Methods for \code{"sdlrm"} objects.
+Additional methods for \code{"sdlrm"} objects.
 }
 \examples{
 # Data set: pss (for description run ?pss)
@@ -60,12 +65,6 @@ boxplot(pss$difference ~ pss$group, xlab = "Group", ylab = "PSS index difference
 
 # Fit a double model (mode = 1)
 fit <- sdlrm(difference ~ group | group, data = pss, xi = 1)
-
-# Print
-fit
-
-# Summary
-summary(fit)
 
 # Coef
 coef(fit)

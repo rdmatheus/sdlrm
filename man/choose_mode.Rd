@@ -2,7 +2,9 @@
 % Please edit documentation in R/06_choose_mode.R
 \name{choose_mode}
 \alias{choose_mode}
-\title{Choose the Mode of the Modified SDL Regression}
+\alias{print.choose_mode}
+\alias{plot.choose_mode}
+\title{Choose the Mode of the Modified Skew Discrete Laplace Regression}
 \usage{
 choose_mode(
   object,
@@ -12,9 +14,13 @@ choose_mode(
   control = sdl_control(...),
   ...
 )
+
+\method{print}{choose_mode}(x, ...)
+
+\method{plot}{choose_mode}(x, ...)
 }
 \arguments{
-\item{object}{an \code{"sdlrm"}object.}
+\item{object}{an object of class \code{"sdlrm"}, a result of a call to \code{\link{sdlrm}}.}
 
 \item{grid}{grid of values that will be used to evaluate the profile log-likelihood function.}
 
@@ -27,18 +33,26 @@ considered grid of values is shown.}
 \item{control}{a list of control arguments specified via \code{\link{sdl_control}}.}
 
 \item{...}{further arguments passed to \code{\link{sdl_control}}.}
+
+\item{x}{an object of class \code{"choose_mode"}.}
 }
 \value{
 An object of class \code{"choose_mode"}. More specifically, it returns a list in which
     each element consists of the fit of the modified SDL regression with each value of the mode
-    specified in \code{grid}.
+    specified in \code{grid}. In addition, it has the elements \code{“logLik”} with the vector
+    of log-likelihood values for each adjustment and \code{“grid”} with the specified grid of
+    values.
+
+    The \code{print} function summarizes the fits by displaying, for each value in \code{grid},
+    the log-likelihood value and the Akaike (AIC) and Bayesian (BIC) information criteria. The
+    \code{plot} function returns a graph of the profiled likelihood of the mode, highlighting its
+    maximum.
 }
 \description{
-Estimation of the mode of the modified SDL distribution in the fit of the modified SDL regression
-    model via profile log-likelihood.
+Estimation of the mode in a modified skew discrete Laplace (SDL) regression fit
+    via profile log-likelihood.
 }
 \examples{
-
 # Data set: pss (for description run ?pss)
 barplot(table(pss$difference), xlab = "PSS index difference", ylab = "Frequency")
 boxplot(pss$difference ~ pss$group, xlab = "Group", ylab = "PSS index difference")
@@ -60,7 +74,11 @@ fit
 
 # Fit with xi = 1
 fit[[1]]
-
+}
+\references{
+Medeiros, R. M. R., and Bourguignon, M. (2025). Modified skew discrete Laplace
+    regression models for integer valued data with applications to paired samples.
+    \emph{Manuscript submitted for publication.}
 }
 \author{
 Rodrigo M. R. de Medeiros <\email{rodrigo.matheus@ufrn.br}>

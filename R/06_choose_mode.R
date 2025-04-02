@@ -1,9 +1,11 @@
-#' Choose the Mode of the Modified SDL Regression
+#' @name choose_mode
 #'
-#' Estimation of the mode of the modified SDL distribution in the fit of the modified SDL regression
-#'     model via profile log-likelihood.
+#' @title Choose the Mode of the Modified Skew Discrete Laplace Regression
 #'
-#' @param object an \code{"sdlrm"}object.
+#' @description Estimation of the mode in a modified skew discrete Laplace (SDL) regression fit
+#'     via profile log-likelihood.
+#'
+#' @param object an object of class \code{"sdlrm"}, a result of a call to \code{\link{sdlrm}}.
 #' @param grid grid of values that will be used to evaluate the profile log-likelihood function.
 #' @param trace logical; if \code{TRUE}, a summary with the profile log-likelihood value, the AIC,
 #'     and the BIC of the fit is displayed.
@@ -14,10 +16,20 @@
 #'
 #' @return An object of class \code{"choose_mode"}. More specifically, it returns a list in which
 #'     each element consists of the fit of the modified SDL regression with each value of the mode
-#'     specified in \code{grid}.
+#'     specified in \code{grid}. In addition, it has the elements \code{“logLik”} with the vector
+#'     of log-likelihood values for each adjustment and \code{“grid”} with the specified grid of
+#'     values.
+#'
+#'     The \code{print} function summarizes the fits by displaying, for each value in \code{grid},
+#'     the log-likelihood value and the Akaike (AIC) and Bayesian (BIC) information criteria. The
+#'     \code{plot} function returns a graph of the profiled likelihood of the mode, highlighting its
+#'     maximum.
+#'
+#' @references Medeiros, R. M. R., and Bourguignon, M. (2025). Modified skew discrete Laplace
+#'     regression models for integer valued data with applications to paired samples.
+#'     \emph{Manuscript submitted for publication.}
 #'
 #' @examples
-#'
 #' # Data set: pss (for description run ?pss)
 #' barplot(table(pss$difference), xlab = "PSS index difference", ylab = "Frequency")
 #' boxplot(pss$difference ~ pss$group, xlab = "Group", ylab = "PSS index difference")
@@ -39,7 +51,6 @@
 #'
 #' # Fit with xi = 1
 #' fit[[1]]
-#'
 #' @author Rodrigo M. R. de Medeiros <\email{rodrigo.matheus@ufrn.br}>
 #'
 #' @export
@@ -99,16 +110,11 @@ choose_mode <- function(object, grid = -5:5, trace = TRUE, plot = TRUE,
 
 }
 
-#' @name choose_mode-methods
-#' @title Methods for 'choose_mode' objects
-#' @param x an object of class \code{"choose_mode"}.
-#' @param ... further arguments passed to or from other methods.
-#'
-#' @author Rodrigo M. R. de Medeiros <\email{rodrigo.matheus@live.com}>
-NULL
 
 # Print
-#' @rdname choose_mode-methods
+#' @rdname choose_mode
+#' @param x an object of class \code{"choose_mode"}.
+#'
 #' @export
 print.choose_mode <- function(x, ...) {
 
@@ -144,7 +150,9 @@ print.choose_mode <- function(x, ...) {
 
 
 # Plot
-#' @rdname choose_mode-methods
+#' @rdname choose_mode
+#' @param x an object of class \code{"choose_mode"}.
+#'
 #' @export
 plot.choose_mode <- function(x, ...) {
   grid <- x$grid

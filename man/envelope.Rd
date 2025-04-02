@@ -4,7 +4,7 @@
 \alias{envelope}
 \alias{print.envelope}
 \alias{plot.envelope}
-\title{Envelope Plot for the Residuals of a Modified SDL Regression Fit}
+\title{Envelope Plot for the Residuals of a Modified Skew Discrete Laplace Regression Fit}
 \usage{
 envelope(object, nsim = 99, progressBar = TRUE, plot = TRUE, ...)
 
@@ -13,7 +13,7 @@ envelope(object, nsim = 99, progressBar = TRUE, plot = TRUE, ...)
 \method{plot}{envelope}(x, type = c("quantile", "pearson"), level = 0.95, ...)
 }
 \arguments{
-\item{object, x}{an object of class \code{"\link{sdlrm}"}.}
+\item{object, x}{an object of class \code{"sdlrm"}, a result of a call to \code{\link{sdlrm}}.}
 
 \item{nsim}{the number of replicates. The default is \code{nsim = 99}.}
 
@@ -48,10 +48,9 @@ construction of confidence bands.}
 \description{
 Provides the normal probability plot with simulated
     envelope of Pearson residuals and randomized quantile residuals
-    resulting from the modified SDL regression fit.
+    resulting from the modified skew discrete Laplace (SDL) regression fit.
 }
 \examples{
-\dontrun{
 ## Data set: pss (for description run ?pss)
 barplot(table(pss$difference), xlab = "PSS index difference", ylab = "Frequency")
 boxplot(pss$difference ~ pss$group, xlab = "Group", ylab = "PSS index difference")
@@ -72,10 +71,10 @@ plot(envel)
 # Plot for the Pearson residuals
 plot(envel, type = "pearson")
 }
-}
 \references{
-Medeiros, R. M. R., and Bourguignon, M. (2025). Modified skew discrete Laplace regression models
-    for integer valued data with applications to paired samples
+Medeiros, R. M. R., and Bourguignon, M. (2025). Modified skew discrete Laplace
+    regression models for integer valued data with applications to paired samples.
+    \emph{Manuscript submitted for publication.}
 }
 \author{
 Rodrigo M. R. de Medeiros <\email{rodrigo.matheus@ufrn.br}>

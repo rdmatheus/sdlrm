@@ -1,10 +1,10 @@
 #' @name sdlrm
 #'
-#' @title Modified SDL Regression for Integer-Valued Data
+#' @title Modified Skew Discrete Laplace Regression for Integer-Valued Data
 #'
-#' @description Fit of the modified SDL regression model via maximum likelihood for a
-#'     parameterization of this distribution that is indexed by the mean, a dispersion parameter,
-#'     and the mode (\code{xi}).
+#' @description Fit of the modified skew discrete Laplace (SDL) regression model via maximum
+#'     likelihood for a parameterization of this distribution that is indexed by the mean, a
+#'     dispersion parameter, and the mode (\code{xi}).
 #'
 #' @param formula a symbolic description of the model, of type \code{y ~ x} for covariates in mean
 #'     only, or \code{y ~ x | z} to enter covariates in the dispersion parameter.
@@ -21,9 +21,10 @@
 #'     \code{"log"} (default) \code{"sqrt"} and \code{"identity"} can be used.
 #' @param xi the mode of the distribution, an integer value.
 #' @param control a list of control arguments specified via \code{\link{sdl_control}}.
+#' @param x a fitted model object of class \code{"sdlrm"}.
 #' @param ... arguments passed to \code{\link[stats]{optim}} via \code{\link{sdl_control}}.
 #'
-#' @return  The \code{sdlrm} function returns an object of class "\code{sdlrm}", which consists of a
+#' @return  The \code{sdlrm} function returns an object of class \code{"sdlrm"}, which consists of a
 #'     list with the following components:
 #' \describe{
 #'   \item{coefficients}{a list containing the elements "\code{mean}" and "\code{dispersion}" that
@@ -33,7 +34,7 @@
 #'   \item{phi}{a vector with the fitted dispersion parameters.}
 #'   \item{phi.link}{the link function used for the dispersion parameter model.}
 #'   \item{xi}{the specified mode for the model.}
-#'   \item{logLik}{log-likelihood of the ditted model.}
+#'   \item{logLik}{log-likelihood value of the fitted model.}
 #'   \item{vcov}{asymptotic covariance matrix of the maximum likelihood estimator of the model parameters vector.}
 #'   \item{nobs}{Sample size.}
 #'   \item{y}{the response vector.}
@@ -46,9 +47,24 @@
 #'          containing the terms objects for the respective models.}
 #'  }
 #'
+#'  The \code{print()} function returns a basic summary of the model fit with the estimated
+#'  coefficients, the log-likelihood value, the mode specified in the fit, and the Akaike (AIC)
+#'  and Bayesian (BIC) information criteria.
+#'
+#' @seealso
+#' \code{\link{summary.sdlrm}} for more detailed summaries,
+#' \code{\link{residuals.sdlrm}} to extract residuals from the fitted model,
+#' \code{\link{predict.sdlrm}} for predictions, including mean and dispersion fitted values,
+#'      fitted variances, and fitted quantiles,
+#' \code{\link{plot.sdlrm}} for diagnostic plots.
+#' \code{\link{choose_mode}} for mode estimation via profile likelihood.
+#' \code{\link{envelope}} to create normal probability graphs with simulated envelope.
+#' \code{\link{disp_test}} to test the hypothesis of constant dispersion.
+#' Information on additional methods for \code{"sdlrm"} objects can be found at \code{\link{sdlrm-methods}}.
 #'
 #' @references Medeiros, R. M. R., and Bourguignon, M. (2025). Modified skew discrete Laplace
-#'     regression models for integer valued data with applications to paired samples
+#'     regression models for integer valued data with applications to paired samples.
+#'     \emph{Manuscript submitted for publication.}
 #'
 #' @author Rodrigo M. R. de Medeiros <\email{rodrigo.matheus@ufrn.br}>
 #'
@@ -59,10 +75,12 @@
 #'
 #' # Fit with a model only for the mean (mode = 1)
 #' fit0 <- sdlrm(difference ~ group, data = pss, xi = 1)
+#' fit0
 #' summary(fit0)
 #'
 #' # Fit a double model (mean and dispersion)
 #' fit <- sdlrm(difference ~ group | group, data = pss, xi = 1)
+#' fit
 #' summary(fit)
 NULL
 
@@ -141,5 +159,43 @@ sdlrm <- function(formula, data, subset, na.action, phi.link = "log", xi = 0,
 
   class(out) <- "sdlrm"
   out
+}
+
+
+# Print
+#' @rdname sdlrm
+#' @param digits a non-null value for digits specifies the minimum number of significant digits to
+#'     be printed in values.
+#' @export
+print.sdlrm <- function(x, digits = max(3, getOption("digits") - 3), ...)
+{
+
+  p <- length(x$coefficients$mean)
+  k <- length(x$coefficients$dispersion)
+  n <- x$nobs
+
+  cat("\nCall:\n")
+  print(x$call)
+  if(x$optim.pars$convergence != 0) {
+
+    cat("\nmodel did not converge\n")
+
+  }else{
+
+    cat("\nMean Coefficients:\n")
+    print(round(stats::coefficients(x, "mean"), digits))
+
+    cat("\nDispersion Coefficients:\n")
+    print(round(stats::coefficients(x, "dispersion"), digits))
+
+    cat("\n---",
+        "\nLog-lik value: ", round(stats::logLik(x), digits),
+        "\nMode: ", x$xi,
+        "\nAIC: ", round(stats::AIC(x), digits),
+        " and BIC: ", round(stats::AIC(x, k = log(n)), digits), "\n", sep = "")
+
+  }
+
+  invisible(x)
 }
 

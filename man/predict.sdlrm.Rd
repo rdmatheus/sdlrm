@@ -2,7 +2,7 @@
 % Please edit documentation in R/05_sdl_methods.R
 \name{predict.sdlrm}
 \alias{predict.sdlrm}
-\title{Predict Method for a Modified SDL Fit}
+\title{Predict Method for a Modified Skew Discrete Laplace Regression Fit}
 \usage{
 \method{predict}{sdlrm}(
   object,
@@ -14,7 +14,7 @@
 )
 }
 \arguments{
-\item{object}{an \code{"sdlrm"} object.}
+\item{object}{an object of class \code{"sdlrm"}, a result of a call to \code{\link{sdlrm}}.}
 
 \item{newdata}{optionally, a data frame in which to look for variables
 with which to predict. If omitted, the fitted linear predictors are
@@ -23,7 +23,7 @@ used.}
 \item{type}{the type of prediction required. The default is on the scale of
 the response variable \code{("response")}, that is, the fitted values
 (fitted means). The alternative \code{"dispersion"} provides the fitted
-dispersion, while \code{"variance"} provides the fitted variances. Finally,
+dispersion parameters, while \code{"variance"} provides the fitted variances. Finally,
 the option \code{"quantile"} gives the fitted quantiles in the order
 specified via \code{at}.}
 
@@ -37,10 +37,10 @@ values in \code{newdata}. The default is to predict \code{NA}.}
 \item{...}{arguments passed to or from other methods.}
 }
 \value{
-A vector of predictions.
+A vector with the required predictions.
 }
 \description{
-Obtains predictions from a fitted modified SDL regression object.
+Obtains predictions from a fitted modified skew discrete Laplace regression object.
 }
 \examples{
 ## Data set: pss (for description run ?pss)
@@ -69,6 +69,11 @@ medians
 ## Fitted third quartiles
 quantiles <- predict(fit, type = "quantile", at = 0.75)
 quantiles
+}
+\references{
+Medeiros, R. M. R., and Bourguignon, M. (2025). Modified skew discrete Laplace
+    regression models for integer valued data with applications to paired samples.
+    \emph{Manuscript submitted for publication.}
 }
 \author{
 Rodrigo M. R. de Medeiros <\email{rodrigo.matheus@ufrn.br}>

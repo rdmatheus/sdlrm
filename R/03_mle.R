@@ -1,9 +1,9 @@
 #' Optimization Control Parameters Passed to optim
 #'
-#' Optimization parameters passed to \code{\link[stats]{optim}} for the fit of an modified SDL regression
-#'     model via \code{\link{sdlrm}}. This function acts in the same spirit as
-#'     \code{\link[betareg]{betareg.control}} from the \code{betareg} package. Its primary purpose
-#'     is to gather all the optimization control arguments in a single function.
+#' Optimization parameters passed to \code{\link[stats]{optim}} for the fit of an modified skew
+#'     discrete Laplace (SDL) regression model via \code{\link{sdlrm}}. This function acts in the
+#'     same spirit as \code{\link[betareg]{betareg.control}} from the \code{betareg} package. Its
+#'     primary purpose is to gather all the optimization control arguments in a single function.
 #'
 #' @param method the method to be used. See "Details" in \code{\link[stats]{optim}}. The default
 #'     method (\code{"BFGS"}) is a quasi-Newton method (also known as a variable metric algorithm),
@@ -104,7 +104,7 @@ sdl_mle <- function(y, X = NULL, Z = NULL, link = "log", xi, control = sdl_contr
 
   # Convergence status
   if (opt$convergence > 0)
-    warning(cat("optimization failed to converge\n"))
+    warning("optimization failed to converge")
 
   opt
 
