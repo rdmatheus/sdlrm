@@ -2,19 +2,19 @@
 % Please edit documentation in R/08_constant_dispersion.R
 \name{disp_test}
 \alias{disp_test}
-\title{Test for Constant Dispersion in the Modified SDL Regression}
+\title{Test for Constant Dispersion in the Modified Skew Discrete Laplace Regression}
 \usage{
 disp_test(object)
 }
 \arguments{
-\item{object}{an \code{"sdlrm"} object.}
+\item{object}{an object of class \code{"sdlrm"}, a result of a call to \code{\link{sdlrm}}.}
 }
 \value{
 the function \code{disp_test} returns the values and corresponding asymptotic
     \emph{p}-values of the score, Wald, likelihood ratio, and gradient test statistics
 }
 \description{
-Hypothesis test on constant dispersion in the modified SDL regression.
+Hypothesis test on constant dispersion in the modified skew discrete Laplace regression.
 }
 \examples{
 ## Data set: pss (for description run ?pss)
@@ -27,4 +27,9 @@ fit0 <- sdlrm(difference ~ group | group, data = pss, xi = 1)
 ## Constant dispersion test
 disp_test(fit0)
 
+}
+\references{
+Medeiros, R. M. R., and Bourguignon, M. (2025). Modified skew discrete Laplace
+    regression models for integer valued data with applications to paired samples.
+    \emph{Manuscript submitted for publication.}
 }

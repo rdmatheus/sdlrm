@@ -2,21 +2,25 @@
 % Please edit documentation in R/05_sdl_methods.R
 \name{residuals.sdlrm}
 \alias{residuals.sdlrm}
-\title{Extract Model Residuals for a Modified SDL Regression}
+\title{Extract Model Residuals for a Modified Skew Discrete Laplace Regression Fit}
 \usage{
 \method{residuals}{sdlrm}(object, type = c("quantile", "pearson", "response"), ...)
 }
 \arguments{
-\item{object}{an \code{"sdlrm"} object.}
+\item{object}{an object of class \code{"sdlrm"}, a result of a call to \code{\link{sdlrm}}.}
 
 \item{type}{character; specifies which residual should be extracted.
-The available arguments are "quantile" (default), "pearson",
-and "response" (raw residuals, y - mu).}
+The available arguments are \code{"quantile"} (randomized quantile
+residuals; default), \code{"pearson"} (Pearson residuals, i.e., (y - mean) / sd),
+and \code{"response"} (raw residuals, i.e., y - mean).}
 
 \item{...}{further arguments passed to or from other methods.}
 }
+\value{
+A vector with the required residuals.
+}
 \description{
-Extract Model Residuals for a Modified SDL Regression
+Residuals resulting from fitting a modified Laplace discrete skew regression.
 }
 \examples{
 ## Data set: pss (for description run ?pss)

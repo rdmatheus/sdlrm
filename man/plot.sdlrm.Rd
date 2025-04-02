@@ -2,18 +2,20 @@
 % Please edit documentation in R/05_sdl_methods.R
 \name{plot.sdlrm}
 \alias{plot.sdlrm}
-\title{Diagnostic Plots for the Modified SDL Regression}
+\title{Diagnostic Plots for the Modified Skew Discrete Laplace Regression}
 \usage{
 \method{plot}{sdlrm}(
   x,
-  which = 1:2,
+  which = 1:4,
   type = c("quantile", "pearson", "response"),
   ask = prod(graphics::par("mfcol")) < length(which) && grDevices::dev.interactive(),
+  pch = "+",
+  lty = 2,
   ...
 )
 }
 \arguments{
-\item{x}{an object of class \code{"sdlrm"}.}
+\item{x}{an object of class \code{"sdlrm"}, a result of a call to \code{\link{sdlrm}}.}
 
 \item{which}{numeric; if a subset of the plots is required, specify a subset
 of the numbers \code{1:6}.}
@@ -24,15 +26,33 @@ envelope plot. The available options are \code{"quantile"} (default),
 
 \item{ask}{logical; if \code{TRUE}, the user is asked before each plot.}
 
-\item{...}{further arguments passed to or from other methods.}
+\item{pch, lty, ...}{graphical parameters (see \code{\link[graphics]{par}})}
+}
+\value{
+\code{plot} method for \code{"\link{sdlrm}"} objects returns six types
+    of diagnostic plots.
 }
 \description{
-Six plots (selectable by \code{which}) are currently available:
-a plot of residuals against fitted values, a plot of residuals against
-the observation indices, a Normal Q-Q plot, a barplot with comparisons of the
-observed and fitted frequencies, a plot of the sample autocorrelations
-of the residuals, and a plot of the sample partial autocorrelations
-of the residuals.
+This function provides plots for diagnostic analysis of a modified skew discrete
+    Laplace regression fit.
+}
+\details{
+The \code{plot} method for \code{"\link{sdlrm}"} objects provides six types
+    of diagnostic plots in the following order:
+    \describe{
+        \item{Residuals vs fitted values}{a plot of the residuals
+            against fitted values.}
+        \item{Residuals vs observation indices.}{an index plot of the residuals
+            against  observation indices.}
+        \item{Normal probability plot}{a normal probability plot of the residuals.}
+        \item{Fitted vs observed frequencies}{a bar plot with comparisons of the observed
+            and fitted frequencies.}
+        \item{Sample autocorrelation plot}{sample autocorrelation function plot of the residuals.}
+        \item{Sample partial autocorrelation plot}{sample partial autocorrelation function plot of the residuals.}
+     }
+
+     The \code{which} argument can be used to select a subset of the implemented plots.
+     Default is \code{which = 1:4}.
 }
 \examples{
 ## Data set: pss (for description run ?pss)
@@ -62,5 +82,7 @@ plot(fit, which = 5)
 plot(fit, which = 6)
 }
 \author{
+Francisco F. de Queiroz <\email{felipeq@ime.usp.br}>
+
 Rodrigo M. R. de Medeiros <\email{rodrigo.matheus@ufrn.br}>
 }

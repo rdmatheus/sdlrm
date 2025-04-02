@@ -1,13 +1,13 @@
 Package: sdlrm
 Type: Package
 Title: Modified Skew Discrete Laplace Regression for Integer-Valued and Paired Discrete Data
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: person("Rodrigo", "Medeiros",
     email = "rodrigo.matheus@ufrn.br",
     role = c("aut", "cre"))
-Description: Implementation of the modified SDL regression model. The package provides a set
-    of functions for a complete analysis of integer-valued data, where the dependent variable
-    is assumed to follow a modified skew discrete Laplace (SDL) distribution. This regression
+Description: Implementation of the modified skew discrete Laplace (SDL) regression model.
+    The package provides a set of functions for a complete analysis of integer-valued data, 
+    where the dependent variable is assumed to follow a modified SDL distribution. This regression
     model is useful for the analysis of integer-valued data and experimental studies in which
     paired discrete observations are collected.
 URL: https://github.com/rdmatheus/sdlrm

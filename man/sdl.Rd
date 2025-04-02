@@ -131,8 +131,9 @@ Kotz, S., Kozubowski, T. J., and Podgórski, K. (2001). \emph{The Laplace Distri
     Kozubowski, T. J., and Inusah, S. (2006). A skew Laplace distribution on integers.
     \emph{Annals of the Institute of Statistical Mathematics}, \bold{58}, 555---571.
 
-    Medeiros, R. M. R., and Bourguigon, M. (2025). Modified skew discrete Laplace regression
-        models for integer valued data with applications to paired samples
+    Medeiros, R. M. R., and Bourguignon, M. (2025). Modified skew discrete Laplace
+    regression models for integer valued data with applications to paired samples.
+    \emph{Manuscript submitted for publication.}
 }
 \author{
 Rodrigo M. R. de Medeiros <\email{rodrigo.matheus@ufrn.br}>

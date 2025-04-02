@@ -2,7 +2,8 @@
 % Please edit documentation in R/04_sdl_regression.R
 \name{sdlrm}
 \alias{sdlrm}
-\title{Modified SDL Regression for Integer-Valued Data}
+\alias{print.sdlrm}
+\title{Modified Skew Discrete Laplace Regression for Integer-Valued Data}
 \usage{
 sdlrm(
   formula,
@@ -14,6 +15,8 @@ sdlrm(
   control = sdl_control(...),
   ...
 )
+
+\method{print}{sdlrm}(x, digits = max(3, getOption("digits") - 3), ...)
 }
 \arguments{
 \item{formula}{a symbolic description of the model, of type \code{y ~ x} for covariates in mean
@@ -39,9 +42,14 @@ if that is unset. The ‘factory-fresh’ default is \link{na.omit}. Another pos
 \item{control}{a list of control arguments specified via \code{\link{sdl_control}}.}
 
 \item{...}{arguments passed to \code{\link[stats]{optim}} via \code{\link{sdl_control}}.}
+
+\item{x}{a fitted model object of class \code{"sdlrm"}.}
+
+\item{digits}{a non-null value for digits specifies the minimum number of significant digits to
+be printed in values.}
 }
 \value{
-The \code{sdlrm} function returns an object of class "\code{sdlrm}", which consists of a
+The \code{sdlrm} function returns an object of class \code{"sdlrm"}, which consists of a
     list with the following components:
 \describe{
   \item{coefficients}{a list containing the elements "\code{mean}" and "\code{dispersion}" that
@@ -51,7 +59,7 @@ The \code{sdlrm} function returns an object of class "\code{sdlrm}", which consi
   \item{phi}{a vector with the fitted dispersion parameters.}
   \item{phi.link}{the link function used for the dispersion parameter model.}
   \item{xi}{the specified mode for the model.}
-  \item{logLik}{log-likelihood of the ditted model.}
+  \item{logLik}{log-likelihood value of the fitted model.}
   \item{vcov}{asymptotic covariance matrix of the maximum likelihood estimator of the model parameters vector.}
   \item{nobs}{Sample size.}
   \item{y}{the response vector.}
@@ -63,11 +71,15 @@ The \code{sdlrm} function returns an object of class "\code{sdlrm}", which consi
   \item{terms}{ a list with elements "mean", "dispersion" and "full"
          containing the terms objects for the respective models.}
  }
+
+ The \code{print()} function returns a basic summary of the model fit with the estimated
+ coefficients, the log-likelihood value, the mode specified in the fit, and the Akaike (AIC)
+ and Bayesian (BIC) information criteria.
 }
 \description{
-Fit of the modified SDL regression model via maximum likelihood for a
-    parameterization of this distribution that is indexed by the mean, a dispersion parameter,
-    and the mode (\code{xi}).
+Fit of the modified skew discrete Laplace (SDL) regression model via maximum
+    likelihood for a parameterization of this distribution that is indexed by the mean, a
+    dispersion parameter, and the mode (\code{xi}).
 }
 \examples{
 # Data set: pss (for description run ?pss)
@@ -76,15 +88,29 @@ boxplot(pss$difference ~ pss$group, xlab = "Group", ylab = "PSS index difference
 
 # Fit with a model only for the mean (mode = 1)
 fit0 <- sdlrm(difference ~ group, data = pss, xi = 1)
+fit0
 summary(fit0)
 
 # Fit a double model (mean and dispersion)
 fit <- sdlrm(difference ~ group | group, data = pss, xi = 1)
+fit
 summary(fit)
 }
 \references{
 Medeiros, R. M. R., and Bourguignon, M. (2025). Modified skew discrete Laplace
-    regression models for integer valued data with applications to paired samples
+    regression models for integer valued data with applications to paired samples.
+    \emph{Manuscript submitted for publication.}
+}
+\seealso{
+\code{\link{summary.sdlrm}} for more detailed summaries,
+\code{\link{residuals.sdlrm}} to extract residuals from the fitted model,
+\code{\link{predict.sdlrm}} for predictions, including mean and dispersion fitted values,
+     fitted variances, and fitted quantiles,
+\code{\link{plot.sdlrm}} for diagnostic plots.
+\code{\link{choose_mode}} for mode estimation via profile likelihood.
+\code{\link{envelope}} to create normal probability graphs with simulated envelope.
+\code{\link{disp_test}} to test the hypothesis of constant dispersion.
+Information on additional methods for \code{"sdlrm"} objects can be found at \code{\link{sdlrm-methods}}.
 }
 \author{
 Rodrigo M. R. de Medeiros <\email{rodrigo.matheus@ufrn.br}>
